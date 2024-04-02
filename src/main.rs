@@ -2,6 +2,9 @@ use std::f32::consts::PI;
 use bevy::DefaultPlugins;
 use bevy::pbr::CascadeShadowConfigBuilder;
 use bevy::prelude::*;
+use rand::distributions::Uniform;
+use rand::prelude::Distribution;
+use rand::RngCore;
 
 fn main() {
     App::new()
@@ -21,6 +24,8 @@ fn main() {
 #[derive(Resource)]
 struct Animations(Vec<Handle<AnimationClip>>);
 
+const TILE_SIZE: f32 = 2.;
+
 fn setup(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
@@ -34,14 +39,8 @@ fn setup(
     ]));
 
     commands.spawn(Camera3dBundle {
-        transform: Transform::from_xyz(5.0, 5.0, 7.5)
+        transform: Transform::from_xyz(10.0, 10.0, 15.5)
             .looking_at(Vec3::new(0.0, 1.0, 0.0), Vec3::Y),
-        ..default()
-    });
-
-    commands.spawn(PbrBundle {
-        mesh: meshes.add(Plane3d::default().mesh().size(500000.0, 500000.0)),
-        material: materials.add(Color::rgb(0.3, 0.5, 0.3)),
         ..default()
     });
 
@@ -64,6 +63,23 @@ fn setup(
         scene: asset_server.load("characters/Rogue.glb#Scene0"),
         ..default()
     });
+
+    let floor_wood = asset_server.load("environment/floor_wood_small.gltf.glb#Scene0");
+    let floor_tile = asset_server.load("environment/floor_tile_small.gltf.glb#Scene0");
+    let floor_dirt = asset_server.load("environment/floor_dirt_small_A.gltf.glb#Scene0");
+
+    let mut rng = rand::thread_rng();
+    let distribution = Uniform::new(0,3);
+    for x in -10..10 {
+        for z in -10..10 {
+            let rand_tile = distribution.sample(&mut rng);
+            commands.spawn(SceneBundle {
+                scene: if rand_tile == 0 { floor_wood.clone_weak() } else if rand_tile == 1 { floor_tile.clone_weak() } else { floor_dirt.clone_weak() },
+                transform: Transform::from_xyz(TILE_SIZE * (x as f32), 0., TILE_SIZE * (z as f32)),
+                ..default()
+            });
+        }
+    }
 }
 
 
