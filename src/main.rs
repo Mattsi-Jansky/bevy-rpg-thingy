@@ -26,7 +26,7 @@ fn main() {
 #[derive(Resource)]
 struct Animations(Vec<Handle<AnimationClip>>);
 
-const TILE_SIZE: f32 = 2.;
+const TILE_SIZE: f32 = 4.;
 
 struct Tile {
     pub tile_type: TileType,

@@ -5,19 +5,15 @@ use rand::distributions::{Uniform, Distribution};
 use crate::{map, Tile, TILE_SIZE, TileType, WallPosition};
 
 pub fn render_environment(commands: &mut Commands, asset_server: Res<AssetServer>, map1: &Vec<Vec<Tile>>) {
-    let floor_wood = asset_server.load("environment/floor_wood_small.gltf.glb#Scene0");
-    let floor_tiled = asset_server.load("environment/floor_tile_small.gltf.glb#Scene0");
-    let floor_dirt_a = asset_server.load("environment/floor_dirt_small_A.gltf.glb#Scene0");
-    let floor_dirt_b = asset_server.load("environment/floor_dirt_small_B.gltf.glb#Scene0");
-    let floor_dirt_c = asset_server.load("environment/floor_dirt_small_C.gltf.glb#Scene0");
-    let floor_dirt_d = asset_server.load("environment/floor_dirt_small_D.gltf.glb#Scene0");
-    let floor_dirt_weeds = asset_server.load("environment/floor_dirt_small_weeds.gltf.glb#Scene0");
+    let floor_wood = asset_server.load("environment/floor_wood_large.gltf.glb#Scene0");
+    let floor_tiled = asset_server.load("environment/floor_tile_large.gltf.glb#Scene0");
+    let floor_dirt_a = asset_server.load("environment/floor_dirt_large.gltf.glb#Scene0");
+    let floor_dirt_b = asset_server.load("environment/floor_dirt_large_rocky.gltf.glb#Scene0");
 
-    let wall = asset_server.load("environment/wall_doorway.glb#Scene0");
+    let wall = asset_server.load("environment/wall.gltf.glb#Scene0");
 
     let mut rng = rand::thread_rng();
-    let distribution = Uniform::new(0, 45);
-    let distribution_2 = Uniform::new(0, 7);
+    let distribution = Uniform::new(0, 2);
     let x_size = map.len();
     let z_size = map.get(0).unwrap().len();
     for x in 0..x_size {
@@ -27,11 +23,8 @@ pub fn render_environment(commands: &mut Commands, asset_server: Res<AssetServer
                 TileType::Dirt => {
                     let random = distribution.sample(&mut rng);
                     Some(
-                        if random <= 10 { floor_dirt_a.clone_weak() }
-                        else if random <= 20 { floor_dirt_b.clone_weak() }
-                        else if random <= 30 { floor_dirt_c.clone_weak() }
-                        else if random <= 40 { floor_dirt_d.clone_weak() }
-                        else { floor_dirt_weeds.clone_weak() }
+                        if random == 0 { floor_dirt_a.clone_weak() }
+                        else { floor_dirt_b.clone_weak() }
                     )
                 }
                 TileType::Tiled => { Some(floor_tiled.clone_weak()) }
@@ -41,14 +34,14 @@ pub fn render_environment(commands: &mut Commands, asset_server: Res<AssetServer
             if let Some(tile_scene) = maybe_tile_scene {
                 commands.spawn(SceneBundle {
                     scene: tile_scene,
-                    transform: Transform::from_xyz(TILE_SIZE * (x as f32), 0., TILE_SIZE * (z as f32)),
+                    transform: Transform::from_xyz(TILE_SIZE * (x as f32), 0., TILE_SIZE * (z as f32)),//.with_scale(Vec3::new(2., 2., 2.)),
                     ..default()
                 });
             }
             if matches!(tile.wall_position, WallPosition::North) {
                 commands.spawn(SceneBundle {
                     scene: wall.clone_weak(),
-                    transform: Transform::from_xyz(TILE_SIZE * (x as f32), 0., TILE_SIZE * (z as f32)  - (TILE_SIZE / 2.)).with_scale(Vec3::new(0.5, 0.5, 0.5)),
+                    transform: Transform::from_xyz(TILE_SIZE * (x as f32), 0., TILE_SIZE * (z as f32)  - (TILE_SIZE / 2.)),
                     ..default()
                 });
             }
