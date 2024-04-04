@@ -67,9 +67,11 @@ fn setup(
     let floor_wood = asset_server.load("environment/floor_wood_small.gltf.glb#Scene0");
     let floor_tile = asset_server.load("environment/floor_tile_small.gltf.glb#Scene0");
     let floor_dirt = asset_server.load("environment/floor_dirt_small_A.gltf.glb#Scene0");
+    let wall = asset_server.load("environment/wall_corner.gltf.glb#Scene0");
 
     let mut rng = rand::thread_rng();
     let distribution = Uniform::new(0,3);
+    let distribution_2 = Uniform::new(0,7);
     for x in -10..10 {
         for z in -10..10 {
             let rand_tile = distribution.sample(&mut rng);
@@ -78,6 +80,13 @@ fn setup(
                 transform: Transform::from_xyz(TILE_SIZE * (x as f32), 0., TILE_SIZE * (z as f32)),
                 ..default()
             });
+            if distribution_2.sample(&mut rng) == 0 {
+                commands.spawn(SceneBundle {
+                    scene: wall.clone_weak(),
+                    transform: Transform::from_xyz(TILE_SIZE * (x as f32) - (TILE_SIZE / 2.), 0., TILE_SIZE * (z as f32)  - (TILE_SIZE / 2.)),
+                    ..default()
+                });
+            }
         }
     }
 }
