@@ -30,11 +30,12 @@ const TILE_SIZE: f32 = 2.;
 
 struct Tile {
     pub tile_type: TileType,
+    wall_position: WallPosition
 }
 
 impl Tile {
-    fn new(tile_type: TileType) -> Self {
-        Self { tile_type }
+    fn new(tile_type: TileType, wall_position: WallPosition) -> Self {
+        Self { tile_type, wall_position }
     }
 }
 
@@ -45,28 +46,42 @@ enum TileType {
     Wood
 }
 
+enum WallPosition {
+    None,
+    North,
+    East,
+    South,
+    West,
+    NorthEast,
+    NorthSouth,
+    NorthWest,
+    EastSouth,
+    EastWest,
+    SouthWest
+}
+
 lazy_static! {
     static ref map: Vec<Vec<Tile>> = vec![
         vec![
-            Tile::new(TileType::Dirt),
-            Tile::new(TileType::Dirt),
-            Tile::new(TileType::Dirt),
-            Tile::new(TileType::Dirt),
-            Tile::new(TileType::Dirt)
+            Tile::new(TileType::Dirt, WallPosition::North),
+            Tile::new(TileType::Dirt, WallPosition::None),
+            Tile::new(TileType::Dirt, WallPosition::None),
+            Tile::new(TileType::Dirt, WallPosition::None),
+            Tile::new(TileType::Dirt, WallPosition::None)
         ],
         vec![
-            Tile::new(TileType::Wood),
-            Tile::new(TileType::Wood),
-            Tile::new(TileType::Wood),
-            Tile::new(TileType::Wood),
-            Tile::new(TileType::Wood),
+            Tile::new(TileType::Wood, WallPosition::None),
+            Tile::new(TileType::Wood, WallPosition::None),
+            Tile::new(TileType::Wood, WallPosition::None),
+            Tile::new(TileType::Wood, WallPosition::None),
+            Tile::new(TileType::Wood, WallPosition::None),
         ],
         vec![
-            Tile::new(TileType::Tiled),
-            Tile::new(TileType::Tiled),
-            Tile::new(TileType::None),
-            Tile::new(TileType::Tiled),
-            Tile::new(TileType::Tiled)
+            Tile::new(TileType::Tiled, WallPosition::None),
+            Tile::new(TileType::Tiled, WallPosition::None),
+            Tile::new(TileType::None, WallPosition::None),
+            Tile::new(TileType::Tiled, WallPosition::None),
+            Tile::new(TileType::Tiled, WallPosition::None)
         ]
     ];
 }
