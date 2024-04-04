@@ -28,6 +28,16 @@ struct Animations(Vec<Handle<AnimationClip>>);
 
 const TILE_SIZE: f32 = 2.;
 
+struct Tile {
+    pub tile_type: TileType,
+}
+
+impl Tile {
+    fn new(tile_type: TileType) -> Self {
+        Self { tile_type }
+    }
+}
+
 enum TileType {
     None,
     Dirt,
@@ -36,27 +46,27 @@ enum TileType {
 }
 
 lazy_static! {
-    static ref map: Vec<Vec<TileType>> = vec![
+    static ref map: Vec<Vec<Tile>> = vec![
         vec![
-            TileType::Dirt,
-            TileType::Dirt,
-            TileType::Dirt,
-            TileType::Dirt,
-            TileType::Dirt
+            Tile::new(TileType::Dirt),
+            Tile::new(TileType::Dirt),
+            Tile::new(TileType::Dirt),
+            Tile::new(TileType::Dirt),
+            Tile::new(TileType::Dirt)
         ],
         vec![
-            TileType::Wood,
-            TileType::Wood,
-            TileType::Wood,
-            TileType::Wood,
-            TileType::Wood,
+            Tile::new(TileType::Wood),
+            Tile::new(TileType::Wood),
+            Tile::new(TileType::Wood),
+            Tile::new(TileType::Wood),
+            Tile::new(TileType::Wood),
         ],
         vec![
-            TileType::Tiled,
-            TileType::Tiled,
-            TileType::None,
-            TileType::Tiled,
-            TileType::Tiled,
+            Tile::new(TileType::Tiled),
+            Tile::new(TileType::Tiled),
+            Tile::new(TileType::None),
+            Tile::new(TileType::Tiled),
+            Tile::new(TileType::Tiled)
         ]
     ];
 }

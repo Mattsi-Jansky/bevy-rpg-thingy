@@ -1,9 +1,9 @@
 use bevy::prelude::{Commands, default, Res, SceneBundle, Transform};
 use bevy::asset::AssetServer;
 use rand::distributions::{Uniform, Distribution};
-use crate::{map, TILE_SIZE, TileType};
+use crate::{map, Tile, TILE_SIZE, TileType};
 
-pub fn render_environment(commands: &mut Commands, asset_server: Res<AssetServer>, map1: &Vec<Vec<TileType>>) {
+pub fn render_environment(commands: &mut Commands, asset_server: Res<AssetServer>, map1: &Vec<Vec<Tile>>) {
     let floor_wood = asset_server.load("environment/floor_wood_small.gltf.glb#Scene0");
     let floor_tiled = asset_server.load("environment/floor_tile_small.gltf.glb#Scene0");
     let floor_dirt_a = asset_server.load("environment/floor_dirt_small_A.gltf.glb#Scene0");
@@ -21,7 +21,7 @@ pub fn render_environment(commands: &mut Commands, asset_server: Res<AssetServer
     let z_size = map.get(0).unwrap().len();
     for x in 0..x_size {
         for z in 0..z_size {
-            let maybe_tile_scene = match map.get(x).unwrap().get(z).unwrap() {
+            let maybe_tile_scene = match map.get(x).unwrap().get(z).unwrap().tile_type {
                 TileType::Dirt => {
                     let random = distribution.sample(&mut rng);
                     Some(
