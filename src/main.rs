@@ -76,7 +76,7 @@ enum WallType {
 lazy_static! {
     static ref map: Vec<Vec<Tile>> = vec![
         vec![
-            Tile::new(TileType::Dirt, WallType::Regular, WallType::Regular, WallType::None, WallType::Regular),
+            Tile::new(TileType::Dirt, WallType::Regular, WallType::Regular, WallType::Regular, WallType::Regular),
             Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::None),
             Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::None),
             Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::None),
