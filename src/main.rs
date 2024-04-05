@@ -1,15 +1,13 @@
-use std::f32::consts::PI;
-use bevy::DefaultPlugins;
+use crate::assets::Meshes;
 use bevy::pbr::CascadeShadowConfigBuilder;
 use bevy::prelude::*;
-use bevy_scene_hook::{HookedSceneBundle, HookPlugin, SceneHook};
-use rand::prelude::Distribution;
-use rand::RngCore;
+use bevy::DefaultPlugins;
+use bevy_scene_hook::{HookPlugin, HookedSceneBundle, SceneHook};
 use lazy_static::lazy_static;
-use crate::assets::Meshes;
+use std::f32::consts::PI;
 
-mod environment;
 mod assets;
+mod environment;
 
 fn main() {
     App::new()
@@ -20,10 +18,7 @@ fn main() {
         })
         .add_plugins(DefaultPlugins)
         .add_systems(Startup, (init_meshes, setup).chain())
-        .add_systems(
-            Update,
-            setup_scene_once_loaded,
-        )
+        .add_systems(Update, setup_scene_once_loaded)
         .run();
 }
 
@@ -41,11 +36,20 @@ struct Tile {
 }
 
 impl Tile {
-    fn new(tile_type: TileType, wall_north: WallType,
-           wall_east: WallType,
-           wall_south: WallType,
-           wall_west: WallType) -> Self {
-        Self { tile_type, wall_north, wall_east, wall_south, wall_west }
+    fn new(
+        tile_type: TileType,
+        wall_north: WallType,
+        wall_east: WallType,
+        wall_south: WallType,
+        wall_west: WallType,
+    ) -> Self {
+        Self {
+            tile_type,
+            wall_north,
+            wall_east,
+            wall_south,
+            wall_west,
+        }
     }
 }
 
@@ -53,59 +57,131 @@ enum TileType {
     None,
     Dirt,
     Tiled,
-    Wood
-}
-
-enum WallPosition {
-    None,
-    North,
-    East,
-    South,
-    West,
-    NorthEast,
-    NorthSouth,
-    NorthWest,
-    EastSouth,
-    EastWest,
-    SouthWest
+    Wood,
 }
 
 enum WallType {
     None,
-    Regular
+    Regular,
 }
 
 lazy_static! {
-    static ref map: Vec<Vec<Tile>> = vec![
+    static ref MAP: Vec<Vec<Tile>> = vec![
         vec![
-            Tile::new(TileType::Dirt, WallType::Regular, WallType::None, WallType::None, WallType::Regular),
-            Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::Regular),
-            Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::Regular),
-            Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::Regular),
-            Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::Regular, WallType::Regular)
+            Tile::new(
+                TileType::Dirt,
+                WallType::Regular,
+                WallType::None,
+                WallType::None,
+                WallType::Regular
+            ),
+            Tile::new(
+                TileType::Dirt,
+                WallType::None,
+                WallType::None,
+                WallType::None,
+                WallType::Regular
+            ),
+            Tile::new(
+                TileType::Dirt,
+                WallType::None,
+                WallType::None,
+                WallType::None,
+                WallType::Regular
+            ),
+            Tile::new(
+                TileType::Dirt,
+                WallType::None,
+                WallType::None,
+                WallType::None,
+                WallType::Regular
+            ),
+            Tile::new(
+                TileType::Dirt,
+                WallType::None,
+                WallType::None,
+                WallType::Regular,
+                WallType::Regular
+            )
         ],
         vec![
-            Tile::new(TileType::Wood, WallType::Regular, WallType::None, WallType::None, WallType::None),
-            Tile::new(TileType::Wood, WallType::None, WallType::None, WallType::None, WallType::None),
-            Tile::new(TileType::Wood, WallType::None, WallType::None, WallType::None, WallType::None),
-            Tile::new(TileType::Wood, WallType::None, WallType::None, WallType::None, WallType::None),
-            Tile::new(TileType::Wood, WallType::None, WallType::None, WallType::Regular, WallType::None),
+            Tile::new(
+                TileType::Wood,
+                WallType::Regular,
+                WallType::None,
+                WallType::None,
+                WallType::None
+            ),
+            Tile::new(
+                TileType::Wood,
+                WallType::None,
+                WallType::None,
+                WallType::None,
+                WallType::None
+            ),
+            Tile::new(
+                TileType::Wood,
+                WallType::None,
+                WallType::None,
+                WallType::None,
+                WallType::None
+            ),
+            Tile::new(
+                TileType::Wood,
+                WallType::None,
+                WallType::None,
+                WallType::None,
+                WallType::None
+            ),
+            Tile::new(
+                TileType::Wood,
+                WallType::None,
+                WallType::None,
+                WallType::Regular,
+                WallType::None
+            ),
         ],
         vec![
-            Tile::new(TileType::Tiled, WallType::Regular, WallType::Regular, WallType::None, WallType::None),
-            Tile::new(TileType::Tiled, WallType::None, WallType::Regular, WallType::None, WallType::None),
-            Tile::new(TileType::None, WallType::None, WallType::Regular, WallType::None, WallType::None),
-            Tile::new(TileType::Tiled, WallType::None, WallType::Regular, WallType::None, WallType::None),
-            Tile::new(TileType::Tiled, WallType::None, WallType::Regular, WallType::Regular, WallType::None)
+            Tile::new(
+                TileType::Tiled,
+                WallType::Regular,
+                WallType::Regular,
+                WallType::None,
+                WallType::None
+            ),
+            Tile::new(
+                TileType::Tiled,
+                WallType::None,
+                WallType::Regular,
+                WallType::None,
+                WallType::None
+            ),
+            Tile::new(
+                TileType::None,
+                WallType::None,
+                WallType::Regular,
+                WallType::None,
+                WallType::None
+            ),
+            Tile::new(
+                TileType::Tiled,
+                WallType::None,
+                WallType::Regular,
+                WallType::None,
+                WallType::None
+            ),
+            Tile::new(
+                TileType::Tiled,
+                WallType::None,
+                WallType::Regular,
+                WallType::Regular,
+                WallType::None
+            )
         ]
     ];
 }
 
-fn setup(
-    mut commands: Commands,
-    asset_server: Res<AssetServer>,
-    meshes: Res<Meshes>
-) {
+fn setup(mut commands: Commands, asset_server: Res<AssetServer>, meshes: Res<Meshes>) {
     commands.insert_resource(Animations(vec![
         asset_server.load("characters/Rogue.glb#Animation2"),
         asset_server.load("characters/Rogue.glb#Animation3"),
@@ -129,32 +205,34 @@ fn setup(
             maximum_distance: 400.0,
             ..default()
         }
-            .into(),
+        .into(),
         ..default()
     });
 
-    commands.spawn(HookedSceneBundle { scene: SceneBundle {
-        scene: asset_server.load("characters/Rogue.glb#Scene0"),
-        ..default()
-    }, hook: SceneHook::new(|entity, commands| {
-        if let Some(name) = entity.get::<Name>() {
-            if name.contains("Cube.0") {
-                commands.insert(Visibility::Hidden);
+    commands.spawn(HookedSceneBundle {
+        scene: SceneBundle {
+            scene: asset_server.load("characters/Rogue.glb#Scene0"),
+            ..default()
+        },
+        hook: SceneHook::new(|entity, commands| {
+            if let Some(name) = entity.get::<Name>() {
+                if name.contains("Cube.0") {
+                    commands.insert(Visibility::Hidden);
+                }
             }
-        }})
+        }),
     });
 
-    environment::render_environment(&mut commands, meshes, &map);
+    environment::render_environment(&mut commands, meshes, &MAP);
 }
 
-fn init_meshes(mut commands: Commands,
-               asset_server: Res<AssetServer>) {
+fn init_meshes(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.insert_resource(Meshes::init(asset_server));
 }
 
 fn setup_scene_once_loaded(
     animations: Res<Animations>,
-    mut players: Query<&mut AnimationPlayer, Added<AnimationPlayer>>
+    mut players: Query<&mut AnimationPlayer, Added<AnimationPlayer>>,
 ) {
     for mut player in &mut players {
         player.play(animations.0[0].clone_weak()).repeat();

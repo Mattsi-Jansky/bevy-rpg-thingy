@@ -21,7 +21,7 @@ impl Meshes {
             floor_dirt_a: asset_server.load("environment/floor_dirt_large.gltf.glb#Scene0"),
             floor_dirt_b: asset_server.load("environment/floor_dirt_large_rocky.gltf.glb#Scene0"),
             wall: asset_server.load("environment/wall.gltf.glb#Scene0"),
-            wall_corner: asset_server.load("environment/wall_corner.gltf.glb#Scene0")
+            wall_corner: asset_server.load("environment/wall_corner.gltf.glb#Scene0"),
         }
     }
 
