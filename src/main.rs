@@ -76,7 +76,7 @@ enum WallType {
 lazy_static! {
     static ref map: Vec<Vec<Tile>> = vec![
         vec![
-            Tile::new(TileType::Dirt, WallType::Regular, WallType::None, WallType::None, WallType::Regular),
+            Tile::new(TileType::Dirt, WallType::Regular, WallType::Regular, WallType::None, WallType::Regular),
             Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::None),
             Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::None),
             Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::None),
@@ -132,16 +132,16 @@ fn setup(
         ..default()
     });
 
-    commands.spawn(HookedSceneBundle { scene: SceneBundle {
-        scene: asset_server.load("characters/Rogue.glb#Scene0"),
-        ..default()
-    }, hook: SceneHook::new(|entity, commands| {
-        if let Some(name) = entity.get::<Name>() {
-            if name.contains("Cube.0") {
-                commands.insert(Visibility::Hidden);
-            }
-        }})
-    });
+commands.spawn(HookedSceneBundle { scene: SceneBundle {
+    scene: asset_server.load("characters/Rogue.glb#Scene0"),
+    ..default()
+}, hook: SceneHook::new(|entity, commands| {
+    if let Some(name) = entity.get::<Name>() {
+        if name.contains("Cube.0") {
+            commands.insert(Visibility::Hidden);
+        }
+    }})
+});
 
     environment::render_environment(&mut commands, asset_server, &map);
 }

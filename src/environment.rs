@@ -62,6 +62,21 @@ pub fn render_environment(commands: &mut Commands, asset_server: Res<AssetServer
                     ..default()
                 });
             }
+            if matches!(tile.wall_east, WallType::Regular) {
+                commands.spawn(SceneBundle {
+                    scene: wall.clone_weak(),
+                    transform: Transform::from_xyz(TILE_SIZE * (x as f32) + (TILE_SIZE / 2.), 0., TILE_SIZE * (z as f32))
+                        .with_rotation(Quat::from_rotation_y(-1.5708)),
+                    ..default()
+                });
+            }
+            if matches!(tile.wall_east, WallType::Regular) && matches!(tile.wall_north, WallType::Regular) {
+                commands.spawn(SceneBundle {
+                    scene: wall_corner.clone_weak(),
+                    transform: Transform::from_xyz(TILE_SIZE * (x as f32) + (TILE_SIZE / 2.), 0., TILE_SIZE * (z as f32) - (TILE_SIZE / 2.)),
+                    ..default()
+                });
+            }
             // if distribution_2.sample(&mut rng) == 0 {
             //     commands.spawn(SceneBundle {
             //         scene: wall.clone_weak(),
