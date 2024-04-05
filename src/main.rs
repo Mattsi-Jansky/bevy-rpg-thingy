@@ -6,8 +6,10 @@ use bevy_scene_hook::{HookedSceneBundle, HookPlugin, SceneHook};
 use rand::prelude::Distribution;
 use rand::RngCore;
 use lazy_static::lazy_static;
+use crate::assets::Meshes;
 
 mod environment;
+mod assets;
 
 fn main() {
     App::new()
@@ -17,7 +19,7 @@ fn main() {
             brightness: 2000.,
         })
         .add_plugins(DefaultPlugins)
-        .add_systems(Startup, setup)
+        .add_systems(Startup, (init_meshes, setup).chain())
         .add_systems(
             Update,
             setup_scene_once_loaded,
@@ -102,8 +104,7 @@ lazy_static! {
 fn setup(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
-    mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
+    meshes: Res<Meshes>
 ) {
     commands.insert_resource(Animations(vec![
         asset_server.load("characters/Rogue.glb#Animation2"),
@@ -132,18 +133,23 @@ fn setup(
         ..default()
     });
 
-commands.spawn(HookedSceneBundle { scene: SceneBundle {
-    scene: asset_server.load("characters/Rogue.glb#Scene0"),
-    ..default()
-}, hook: SceneHook::new(|entity, commands| {
-    if let Some(name) = entity.get::<Name>() {
-        if name.contains("Cube.0") {
-            commands.insert(Visibility::Hidden);
-        }
-    }})
-});
+    commands.spawn(HookedSceneBundle { scene: SceneBundle {
+        scene: asset_server.load("characters/Rogue.glb#Scene0"),
+        ..default()
+    }, hook: SceneHook::new(|entity, commands| {
+        if let Some(name) = entity.get::<Name>() {
+            if name.contains("Cube.0") {
+                commands.insert(Visibility::Hidden);
+            }
+        }})
+    });
 
-    environment::render_environment(&mut commands, asset_server, &map);
+    environment::render_environment(&mut commands, meshes, &map);
+}
+
+fn init_meshes(mut commands: Commands,
+               asset_server: Res<AssetServer>) {
+    commands.insert_resource(Meshes::init(asset_server));
 }
 
 fn setup_scene_once_loaded(
