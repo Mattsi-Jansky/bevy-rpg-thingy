@@ -2,6 +2,7 @@ use std::f32::consts::PI;
 use bevy::DefaultPlugins;
 use bevy::pbr::CascadeShadowConfigBuilder;
 use bevy::prelude::*;
+use bevy_scene_hook::{HookedSceneBundle, HookPlugin, SceneHook};
 use rand::prelude::Distribution;
 use rand::RngCore;
 use lazy_static::lazy_static;
@@ -10,15 +11,16 @@ mod environment;
 
 fn main() {
     App::new()
+        .add_plugins(HookPlugin)
         .insert_resource(AmbientLight {
             color: Color::WHITE,
             brightness: 2000.,
         })
         .add_plugins(DefaultPlugins)
-        .add_systems(Startup, (setup, remove_crossbow).chain())
+        .add_systems(Startup, setup)
         .add_systems(
             Update,
-            (setup_scene_once_loaded, remove_crossbow),
+            setup_scene_once_loaded,
         )
         .run();
 }
@@ -130,9 +132,15 @@ fn setup(
         ..default()
     });
 
-    commands.spawn(SceneBundle {
+    commands.spawn(HookedSceneBundle { scene: SceneBundle {
         scene: asset_server.load("characters/Rogue.glb#Scene0"),
         ..default()
+    }, hook: SceneHook::new(|entity, commands| {
+        if let Some(name) = entity.get::<Name>() {
+            if name.contains("Cube.0") {
+                commands.insert(Visibility::Hidden);
+            }
+        }})
     });
 
     environment::render_environment(&mut commands, asset_server, &map);
@@ -144,24 +152,5 @@ fn setup_scene_once_loaded(
 ) {
     for mut player in &mut players {
         player.play(animations.0[0].clone_weak()).repeat();
-    }
-}
-
-fn remove_crossbow(
-    player_entities: Query<Entity, Added<AnimationPlayer>>,
-    children: Query<&Children>,
-    query: Query<(&Name, &Visibility)>,
-    mut commands: Commands,
-) {
-    for player in &player_entities {
-        for child in children.iter_descendants(player) {
-            for result in query.get(child) {
-                if result.0.as_str().contains("Cube.0") {
-                    commands.entity(child)
-                        .remove::<Visibility>()
-                        .insert(Visibility::Hidden);
-                }
-            }
-        }
     }
 }
