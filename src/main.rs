@@ -78,25 +78,25 @@ enum WallType {
 lazy_static! {
     static ref map: Vec<Vec<Tile>> = vec![
         vec![
-            Tile::new(TileType::Dirt, WallType::Regular, WallType::Regular, WallType::Regular, WallType::Regular),
-            Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::None),
-            Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::None),
-            Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::None),
-            Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::None)
+            Tile::new(TileType::Dirt, WallType::Regular, WallType::None, WallType::None, WallType::Regular),
+            Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::Regular),
+            Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::Regular),
+            Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::None, WallType::Regular),
+            Tile::new(TileType::Dirt, WallType::None, WallType::None, WallType::Regular, WallType::Regular)
         ],
         vec![
+            Tile::new(TileType::Wood, WallType::Regular, WallType::None, WallType::None, WallType::None),
             Tile::new(TileType::Wood, WallType::None, WallType::None, WallType::None, WallType::None),
             Tile::new(TileType::Wood, WallType::None, WallType::None, WallType::None, WallType::None),
             Tile::new(TileType::Wood, WallType::None, WallType::None, WallType::None, WallType::None),
-            Tile::new(TileType::Wood, WallType::None, WallType::None, WallType::None, WallType::None),
-            Tile::new(TileType::Wood, WallType::None, WallType::None, WallType::None, WallType::None),
+            Tile::new(TileType::Wood, WallType::None, WallType::None, WallType::Regular, WallType::None),
         ],
         vec![
-            Tile::new(TileType::Tiled, WallType::None, WallType::None, WallType::None, WallType::None),
-            Tile::new(TileType::Tiled, WallType::None, WallType::None, WallType::None, WallType::None),
-            Tile::new(TileType::None, WallType::None, WallType::None, WallType::None, WallType::None),
-            Tile::new(TileType::Tiled, WallType::None, WallType::None, WallType::None, WallType::None),
-            Tile::new(TileType::Tiled, WallType::None, WallType::None, WallType::None, WallType::None)
+            Tile::new(TileType::Tiled, WallType::Regular, WallType::Regular, WallType::None, WallType::None),
+            Tile::new(TileType::Tiled, WallType::None, WallType::Regular, WallType::None, WallType::None),
+            Tile::new(TileType::None, WallType::None, WallType::Regular, WallType::None, WallType::None),
+            Tile::new(TileType::Tiled, WallType::None, WallType::Regular, WallType::None, WallType::None),
+            Tile::new(TileType::Tiled, WallType::None, WallType::Regular, WallType::Regular, WallType::None)
         ]
     ];
 }
