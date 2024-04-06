@@ -1,4 +1,4 @@
-use bevy::prelude::{Bundle, default, Res, SceneBundle, Visibility};
+use bevy::prelude::{Bundle, Component, default, Res, SceneBundle, Visibility};
 use bevy_scene_hook::{HookedSceneBundle, SceneHook};
 use bevy::core::Name;
 use crate::assets::meshes::Meshes;
@@ -19,7 +19,8 @@ impl CharacterBundle {
                     }
                 }),
             },
-            name: Name::new("Player character")
+            name: Name::new("Player character"),
+            state: CharacterState::Idle
         }
     }
 }
@@ -27,5 +28,11 @@ impl CharacterBundle {
 #[derive(Bundle)]
 pub struct CharacterBundle {
     pub scene: HookedSceneBundle,
-    pub name: Name
+    pub name: Name,
+    pub state: CharacterState
+}
+
+#[derive(Component)]
+pub enum CharacterState {
+    Idle
 }
