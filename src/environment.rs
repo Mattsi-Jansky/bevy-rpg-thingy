@@ -6,7 +6,7 @@ use rand::distributions::{Distribution, Uniform};
 use rand::prelude::ThreadRng;
 use crate::map::{Tile, TileType, WallType};
 
-pub fn render_environment(commands: &mut Commands, meshes: Res<Meshes>, map: &Vec<Vec<Tile>>) {
+pub fn render_environment(commands: &mut Commands, meshes: &Res<Meshes>, map: &Vec<Vec<Tile>>) {
     let mut rng = rand::thread_rng();
     let distribution = Uniform::new(0, 2);
     let x_size = map.len();

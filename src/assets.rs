@@ -1,5 +1,5 @@
 use bevy::asset::{AssetServer, Handle};
-use bevy::prelude::{Res, Resource, Scene};
+use bevy::prelude::{Commands, Res, Resource, Scene};
 
 /// Assumption: Assets will live for whole life of application
 #[derive(Resource)]
@@ -11,6 +11,8 @@ pub struct Meshes {
 
     wall: Handle<Scene>,
     wall_corner: Handle<Scene>,
+
+    character_rogue: Handle<Scene>
 }
 
 impl Meshes {
@@ -22,6 +24,7 @@ impl Meshes {
             floor_dirt_b: asset_server.load("environment/floor_dirt_large_rocky.gltf.glb#Scene0"),
             wall: asset_server.load("environment/wall.gltf.glb#Scene0"),
             wall_corner: asset_server.load("environment/wall_corner.gltf.glb#Scene0"),
+            character_rogue: asset_server.load("characters/Rogue.glb#Scene0")
         }
     }
 
@@ -48,4 +51,12 @@ impl Meshes {
     pub fn wall_corner(&self) -> Handle<Scene> {
         self.wall_corner.clone_weak()
     }
+
+    pub fn character_rogue(&self) -> Handle<Scene> {
+        self.character_rogue.clone_weak()
+    }
+}
+
+pub fn init_meshes(mut commands: Commands, asset_server: Res<AssetServer>) {
+    commands.insert_resource(Meshes::init(asset_server));
 }
