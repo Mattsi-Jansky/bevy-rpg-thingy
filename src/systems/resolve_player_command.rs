@@ -16,7 +16,7 @@ pub fn resolve_player_commands(
             NewPlayerCommand::Move { x, z } => {
                 let world_x = (*x as f32) * TILE_SIZE;
                 let world_z = (*z as f32) * TILE_SIZE;
-                
+
                 let mut transform = player_query.single_mut();
                 transform.translation.x = world_x;
                 transform.translation.z = world_z;
