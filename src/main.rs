@@ -1,10 +1,5 @@
+use crate::assets::animations::{init_animations, Animations};
 use crate::assets::meshes::{init_meshes, Meshes};
-use bevy::prelude::*;
-use bevy::DefaultPlugins;
-use bevy_scene_hook::HookPlugin;
-use bevy_mod_raycast::prelude::*;
-use character::CharacterBundle;
-use crate::assets::animations::{Animations, init_animations};
 use crate::camera::setup_camera;
 use crate::environment::render_environment;
 use crate::events::NewPlayerCommand;
@@ -13,15 +8,20 @@ use crate::map::MAP;
 use crate::systems::character_animations::update_character_animations;
 use crate::systems::cursor::update_cursor;
 use crate::systems::resolve_player_command::resolve_player_commands;
+use bevy::prelude::*;
+use bevy::DefaultPlugins;
+use bevy_mod_raycast::prelude::*;
+use bevy_scene_hook::HookPlugin;
+use character::CharacterBundle;
 
-mod environment;
-mod map;
-mod character;
-mod camera;
-mod lighting;
 mod assets;
-mod systems;
+mod camera;
+mod character;
+mod environment;
 mod events;
+mod lighting;
+mod map;
+mod systems;
 
 fn main() {
     App::new()

@@ -1,15 +1,15 @@
-use bevy::prelude::{Commands, Res, Resource, AssetServer, Handle, AnimationClip};
+use bevy::prelude::{AnimationClip, AssetServer, Commands, Handle, Res, Resource};
 
 /// Assumption: Animations will live for whole life of application
 #[derive(Resource)]
 pub struct Animations {
-    rogue_idle: Handle<AnimationClip>
+    rogue_idle: Handle<AnimationClip>,
 }
 
 impl Animations {
     pub fn init(asset_server: Res<AssetServer>) -> Self {
         Self {
-            rogue_idle: asset_server.load("characters/Rogue.glb#Animation36")
+            rogue_idle: asset_server.load("characters/Rogue.glb#Animation36"),
         }
     }
 

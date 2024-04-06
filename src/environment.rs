@@ -1,9 +1,9 @@
 use crate::assets::meshes::Meshes;
+use crate::map::{Tile, TileType, WallType};
 use bevy::math::Quat;
-use bevy::prelude::{Commands, default, Res, SceneBundle, Transform};
+use bevy::prelude::{default, Commands, Res, SceneBundle, Transform};
 use rand::distributions::{Distribution, Uniform};
 use rand::prelude::ThreadRng;
-use crate::map::{Tile, TileType, WallType};
 
 pub const TILE_SIZE: f32 = 4.;
 

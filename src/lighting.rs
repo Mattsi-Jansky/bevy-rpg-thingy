@@ -1,6 +1,6 @@
-use bevy::prelude::{Commands, default, Transform};
-use bevy::pbr::{CascadeShadowConfigBuilder, DirectionalLight, DirectionalLightBundle};
 use bevy::math::{EulerRot, Quat};
+use bevy::pbr::{CascadeShadowConfigBuilder, DirectionalLight, DirectionalLightBundle};
+use bevy::prelude::{default, Commands, Transform};
 use std::f32::consts::PI;
 
 pub fn setup_lighting(commands: &mut Commands) {
@@ -15,7 +15,7 @@ pub fn setup_lighting(commands: &mut Commands) {
             maximum_distance: 400.0,
             ..default()
         }
-            .into(),
+        .into(),
         ..default()
     });
 }

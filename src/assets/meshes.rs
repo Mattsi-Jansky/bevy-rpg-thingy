@@ -12,7 +12,7 @@ pub struct Meshes {
     wall: Handle<Scene>,
     wall_corner: Handle<Scene>,
 
-    character_rogue: Handle<Scene>
+    character_rogue: Handle<Scene>,
 }
 
 impl Meshes {
@@ -24,7 +24,7 @@ impl Meshes {
             floor_dirt_b: asset_server.load("environment/floor_dirt_large_rocky.gltf.glb#Scene0"),
             wall: asset_server.load("environment/wall.gltf.glb#Scene0"),
             wall_corner: asset_server.load("environment/wall_corner.gltf.glb#Scene0"),
-            character_rogue: asset_server.load("characters/Rogue.glb#Scene0")
+            character_rogue: asset_server.load("characters/Rogue.glb#Scene0"),
         }
     }
 

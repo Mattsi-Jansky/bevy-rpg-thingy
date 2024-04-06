@@ -1,5 +1,5 @@
-use bevy::prelude::{Camera3dBundle, Commands, default, Transform};
 use bevy::math::Vec3;
+use bevy::prelude::{default, Camera3dBundle, Commands, Transform};
 
 pub fn setup_camera(commands: &mut Commands) {
     commands.spawn(Camera3dBundle {
