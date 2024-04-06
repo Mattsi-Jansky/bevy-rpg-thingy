@@ -8,7 +8,7 @@ use bevy::prelude::{
 pub fn resolve_player_commands(
     mut commands: Commands,
     mut events: EventReader<NewPlayerCommand>,
-    mut character_query: Query<&mut Transform, With<CharacterState>>,
+    mut player_query: Query<&mut Transform, With<CharacterState>>,
     mut camera_query: Query<Entity, With<Camera>>,
 ) {
     for event in events.read() {
@@ -16,17 +16,16 @@ pub fn resolve_player_commands(
             NewPlayerCommand::Move { x, z } => {
                 let world_x = (*x as f32) * TILE_SIZE;
                 let world_z = (*z as f32) * TILE_SIZE;
-                if let mut transform = character_query.single_mut() {
-                    transform.translation.x = world_x;
-                    transform.translation.z = world_z;
-                }
+                
+                let mut transform = player_query.single_mut();
+                transform.translation.x = world_x;
+                transform.translation.z = world_z;
 
-                if let entity = camera_query.single_mut() {
-                    commands.entity(entity).insert(
-                        Transform::from_xyz(10.0 + world_x, 10.0, 15.5 + world_z)
-                            .looking_at(Vec3::new(world_x, 1.0, world_z), Vec3::Y),
-                    );
-                }
+                let camera_entity = camera_query.single_mut();
+                commands.entity(camera_entity).insert(
+                    Transform::from_xyz(10.0 + world_x, 10.0, 15.5 + world_z)
+                        .looking_at(Vec3::new(world_x, 1.0, world_z), Vec3::Y),
+                );
             }
         }
     }
