@@ -12,6 +12,7 @@ use crate::lighting::setup_lighting;
 use crate::map::MAP;
 use crate::systems::character_animations::update_character_animations;
 use crate::systems::cursor::update_cursor;
+use crate::systems::resolve_player_command::resolve_player_commands;
 
 mod environment;
 mod map;
@@ -34,6 +35,7 @@ fn main() {
         .add_systems(Startup, (init_meshes, init_animations, setup).chain())
         .add_systems(Update, update_cursor)
         .add_systems(Update, update_character_animations)
+        .add_systems(Update, resolve_player_commands)
         .add_event::<NewPlayerCommand>()
         .run();
 }
