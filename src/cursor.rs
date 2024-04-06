@@ -3,7 +3,7 @@ use bevy_mod_raycast::CursorRay;
 use bevy_mod_raycast::immediate::Raycast;
 use bevy::input::ButtonInput;
 use bevy::log::info;
-use crate::TILE_SIZE;
+use crate::environment::TILE_SIZE;
 
 pub fn update_cursor(
     cursor_ray: Res<CursorRay>,

@@ -1,10 +1,11 @@
-use crate::assets::Meshes;
-use crate::TILE_SIZE;
+use crate::assets::meshes::Meshes;
 use bevy::math::Quat;
 use bevy::prelude::{Commands, default, Res, SceneBundle, Transform};
 use rand::distributions::{Distribution, Uniform};
 use rand::prelude::ThreadRng;
 use crate::map::{Tile, TileType, WallType};
+
+pub const TILE_SIZE: f32 = 4.;
 
 pub fn render_environment(commands: &mut Commands, meshes: &Res<Meshes>, map: &Vec<Vec<Tile>>) {
     let mut rng = rand::thread_rng();

@@ -1,7 +1,7 @@
 use bevy::asset::{AssetServer, Handle};
 use bevy::prelude::{Commands, Res, Resource, Scene};
 
-/// Assumption: Assets will live for whole life of application
+/// Assumption: Meshes will live for whole life of application
 #[derive(Resource)]
 pub struct Meshes {
     floor_wood: Handle<Scene>,

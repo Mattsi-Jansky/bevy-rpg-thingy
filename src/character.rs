@@ -1,7 +1,7 @@
 use bevy::prelude::{Bundle, default, Res, SceneBundle, Visibility};
 use bevy_scene_hook::{HookedSceneBundle, SceneHook};
 use bevy::core::Name;
-use crate::assets::Meshes;
+use crate::assets::meshes::Meshes;
 
 impl CharacterBundle {
     pub fn new(meshes: &Res<Meshes>) -> Self {
