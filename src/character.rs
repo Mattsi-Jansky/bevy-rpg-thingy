@@ -35,5 +35,5 @@ pub struct CharacterBundle {
 #[derive(Component)]
 pub enum CharacterState {
     Idle,
-    Moving
+    Moving,
 }

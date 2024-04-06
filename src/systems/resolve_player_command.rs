@@ -1,13 +1,11 @@
-
+use crate::animation_scenes::AnimationScene;
 use crate::environment::TILE_SIZE;
 use crate::events::{AnimationSceneStart, NewPlayerCommand};
 use bevy::prelude::{EventReader, EventWriter};
-use crate::animation_scenes::AnimationScene;
-
 
 pub fn resolve_player_commands(
     mut events: EventReader<NewPlayerCommand>,
-    mut event_writer: EventWriter<AnimationSceneStart>
+    mut event_writer: EventWriter<AnimationSceneStart>,
 ) {
     for event in events.read() {
         match event {
@@ -15,7 +13,10 @@ pub fn resolve_player_commands(
                 let world_x = (*x as f32) * TILE_SIZE;
                 let world_z = (*z as f32) * TILE_SIZE;
 
-                event_writer.send(AnimationSceneStart(AnimationScene::PlayerMove { x: world_x, z: world_z}));
+                event_writer.send(AnimationSceneStart(AnimationScene::PlayerMove {
+                    x: world_x,
+                    z: world_z,
+                }));
             }
         }
     }

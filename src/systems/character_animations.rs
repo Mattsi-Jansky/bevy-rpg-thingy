@@ -4,8 +4,6 @@ use bevy::animation::{AnimationClip, AnimationPlayer};
 use bevy::asset::Handle;
 use bevy::prelude::{Children, Entity, HierarchyQueryExt, Query, Res};
 
-
-
 pub fn update_character_animations(
     character_state_query: Query<(Entity, &CharacterState)>,
     mut animation_player_query: Query<&mut AnimationPlayer>,
@@ -28,9 +26,8 @@ fn get_animation_for_state(
     animations: &Res<Animations>,
     state: &CharacterState,
 ) -> Handle<AnimationClip> {
-    
     match state {
         CharacterState::Idle => animations.rogue_idle(),
-        CharacterState::Moving => animations.rogue_moving()
+        CharacterState::Moving => animations.rogue_moving(),
     }
 }

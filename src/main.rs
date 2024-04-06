@@ -1,10 +1,12 @@
-use crate::assets::animations::{init_animations};
+use crate::animation_scenes::{AnimationScene, AnimationSceneTimer};
+use crate::assets::animations::init_animations;
 use crate::assets::meshes::{init_meshes, Meshes};
 use crate::camera::setup_camera;
 use crate::environment::render_environment;
 use crate::events::{AnimationSceneStart, NewPlayerCommand};
 use crate::lighting::setup_lighting;
 use crate::map::MAP;
+use crate::systems::animation_scene_manager::{init_animation_scenes, update_animation_scenes};
 use crate::systems::character_animations::update_character_animations;
 use crate::systems::cursor::update_cursor;
 use crate::systems::resolve_player_command::resolve_player_commands;
@@ -13,9 +15,8 @@ use bevy::DefaultPlugins;
 use bevy_mod_raycast::prelude::*;
 use bevy_scene_hook::HookPlugin;
 use character::CharacterBundle;
-use crate::animation_scenes::{AnimationScene, AnimationSceneTimer};
-use crate::systems::animation_scene_manager::{init_animation_scenes, update_animation_scenes};
 
+mod animation_scenes;
 mod assets;
 mod camera;
 mod character;
@@ -24,13 +25,12 @@ mod events;
 mod lighting;
 mod map;
 mod systems;
-mod animation_scenes;
 
 #[derive(Resource, Default)]
 pub enum AppState {
     #[default]
     AwaitingInput,
-    Animating(AnimationScene)
+    Animating(AnimationScene),
 }
 
 fn main() {

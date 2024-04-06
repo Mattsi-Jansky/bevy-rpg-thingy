@@ -1,5 +1,5 @@
-use bevy::prelude::Event;
 use crate::animation_scenes::AnimationScene;
+use bevy::prelude::Event;
 
 #[derive(Event)]
 pub enum NewPlayerCommand {
