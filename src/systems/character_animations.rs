@@ -31,5 +31,6 @@ fn get_animation_for_state(
     
     match state {
         CharacterState::Idle => animations.rogue_idle(),
+        CharacterState::Moving => animations.rogue_moving()
     }
 }
