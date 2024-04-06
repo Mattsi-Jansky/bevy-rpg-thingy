@@ -1,15 +1,13 @@
 use crate::character::CharacterState;
 use crate::environment::TILE_SIZE;
 use crate::events::NewPlayerCommand;
-use bevy::prelude::{
-    Camera, Commands, Entity, EventReader, Query, Transform, Vec3, With,
-};
+use bevy::prelude::{Camera, Commands, Entity, EventReader, Query, Res, Transform, Vec3, With};
+use crate::animation_scenes::AnimationScene;
+use crate::AppState;
 
 pub fn resolve_player_commands(
     mut commands: Commands,
-    mut events: EventReader<NewPlayerCommand>,
-    mut player_query: Query<&mut Transform, With<CharacterState>>,
-    mut camera_query: Query<Entity, With<Camera>>,
+    mut events: EventReader<NewPlayerCommand>
 ) {
     for event in events.read() {
         match event {
@@ -17,14 +15,8 @@ pub fn resolve_player_commands(
                 let world_x = (*x as f32) * TILE_SIZE;
                 let world_z = (*z as f32) * TILE_SIZE;
 
-                let mut transform = player_query.single_mut();
-                transform.translation.x = world_x;
-                transform.translation.z = world_z;
-
-                let camera_entity = camera_query.single_mut();
-                commands.entity(camera_entity).insert(
-                    Transform::from_xyz(10.0 + world_x, 10.0, 15.5 + world_z)
-                        .looking_at(Vec3::new(world_x, 1.0, world_z), Vec3::Y),
+                commands.insert_resource(AppState::Animating(
+                    AnimationScene::PlayerMove { x: world_x, z: world_z})
                 );
             }
         }
