@@ -2,9 +2,9 @@ use crate::assets::animations::Animations;
 use crate::character::CharacterState;
 use bevy::animation::{AnimationClip, AnimationPlayer};
 use bevy::asset::Handle;
-use bevy::prelude::{info, Added, Children, Entity, HierarchyQueryExt, Query, Res};
-use bevy::utils::hashbrown::Equivalent;
-use std::ops::DerefMut;
+use bevy::prelude::{Children, Entity, HierarchyQueryExt, Query, Res};
+
+
 
 pub fn update_character_animations(
     character_state_query: Query<(Entity, &CharacterState)>,
@@ -28,8 +28,8 @@ fn get_animation_for_state(
     animations: &Res<Animations>,
     state: &CharacterState,
 ) -> Handle<AnimationClip> {
-    let animation = match state {
+    
+    match state {
         CharacterState::Idle => animations.rogue_idle(),
-    };
-    animation
+    }
 }

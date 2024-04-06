@@ -1,4 +1,4 @@
-use crate::assets::animations::{init_animations, Animations};
+use crate::assets::animations::{init_animations};
 use crate::assets::meshes::{init_meshes, Meshes};
 use crate::camera::setup_camera;
 use crate::environment::render_environment;

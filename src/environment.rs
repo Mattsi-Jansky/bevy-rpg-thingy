@@ -11,13 +11,13 @@ pub fn render_environment(commands: &mut Commands, meshes: &Res<Meshes>, map: &V
     let mut rng = rand::thread_rng();
     let distribution = Uniform::new(0, 2);
     let x_size = map.len();
-    let z_size = map.get(0).unwrap().len();
+    let z_size = map.first().unwrap().len();
     for x in 0..x_size {
         for z in 0..z_size {
             let tile = map.get(x).unwrap().get(z).unwrap();
-            render_tile(commands, &meshes, &mut rng, distribution, x, z, tile);
-            render_walls(commands, &meshes, x, z, tile);
-            render_wall_corners(commands, &meshes, x, z, tile);
+            render_tile(commands, meshes, &mut rng, distribution, x, z, tile);
+            render_walls(commands, meshes, x, z, tile);
+            render_wall_corners(commands, meshes, x, z, tile);
         }
     }
 }

@@ -13,7 +13,7 @@ pub fn update_cursor(
 ) {
     if buttons.just_pressed(MouseButton::Left) {
         if let Some(cursor_ray) = **cursor_ray {
-            let result = raycast.cast_ray(cursor_ray, &default()).get(0);
+            let result = raycast.cast_ray(cursor_ray, &default()).first();
             if let Some(hit) = result {
                 let (_, intersection) = hit;
                 let position = intersection.position();
