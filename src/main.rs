@@ -7,6 +7,7 @@ use character::CharacterBundle;
 use crate::assets::animations::{Animations, init_animations};
 use crate::camera::setup_camera;
 use crate::environment::render_environment;
+use crate::events::NewPlayerCommand;
 use crate::lighting::setup_lighting;
 use crate::map::MAP;
 use crate::systems::character_animations::update_character_animations;
@@ -19,6 +20,7 @@ mod camera;
 mod lighting;
 mod assets;
 mod systems;
+mod events;
 
 fn main() {
     App::new()
@@ -32,6 +34,7 @@ fn main() {
         .add_systems(Startup, (init_meshes, init_animations, setup).chain())
         .add_systems(Update, update_cursor)
         .add_systems(Update, update_character_animations)
+        .add_event::<NewPlayerCommand>()
         .run();
 }
 
