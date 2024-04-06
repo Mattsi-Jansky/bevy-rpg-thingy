@@ -1,9 +1,9 @@
-use crate::character::CharacterState;
+
 use crate::environment::TILE_SIZE;
 use crate::events::{AnimationSceneStart, NewPlayerCommand};
-use bevy::prelude::{Camera, Commands, Entity, EventReader, EventWriter, Query, Res, Transform, Vec3, With};
+use bevy::prelude::{EventReader, EventWriter};
 use crate::animation_scenes::AnimationScene;
-use crate::AppState;
+
 
 pub fn resolve_player_commands(
     mut events: EventReader<NewPlayerCommand>,

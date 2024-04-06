@@ -10,7 +10,7 @@ use crate::events::AnimationSceneStart;
 
 pub fn update_animation_scenes(
     app_state: Res<AppState>,
-    mut time: Res<Time>,
+    time: Res<Time>,
     mut timer: ResMut<AnimationSceneTimer>,
     mut commands: Commands,
     mut player_query: Query<(Entity, &mut Transform), With<CharacterState>>,
@@ -25,7 +25,7 @@ pub fn update_animation_scenes(
 
                 if !timer.timer.finished() {
                     // player_transform.translation.x += (TILE_SIZE * time.delta_seconds());
-                    player_transform.translation.z += (TILE_SIZE * time.delta_seconds());
+                    player_transform.translation.z += TILE_SIZE * time.delta_seconds();
                     commands.entity(camera_entity).insert(
                         Transform::from_xyz(10.0 + target_x, 10.0, 15.5 + target_z)
                             .looking_at(player_transform.translation, Vec3::Y),
