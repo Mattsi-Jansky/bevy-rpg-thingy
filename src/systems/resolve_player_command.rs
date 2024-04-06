@@ -7,7 +7,7 @@ pub fn resolve_player_commands(
     mut commands: Commands,
     mut events: EventReader<NewPlayerCommand>,
     mut character_query: Query<&mut Transform, With<CharacterState>>,
-    mut camera_query: Query<(Entity, &mut Transform), (With<Camera>, Without<CharacterState>)>
+    mut camera_query: Query<Entity, With<Camera>>
 ) {
     for event in events.read() {
         match event {
@@ -19,7 +19,7 @@ pub fn resolve_player_commands(
                     transform.translation.z = world_z;
                 }
 
-                if let (entity, transform) = camera_query.single_mut() {
+                if let (entity) = camera_query.single_mut() {
                     commands.entity(entity).insert(Transform::from_xyz(10.0 + world_x, 10.0, 15.5 + world_z)
                                                        .looking_at(Vec3::new(world_x, 1.0, world_z), Vec3::Y));
                 }
