@@ -9,6 +9,7 @@ use crate::camera::setup_camera;
 use crate::environment::render_environment;
 use crate::lighting::setup_lighting;
 use crate::map::MAP;
+use crate::systems::character_animations::update_character_animations;
 use crate::systems::cursor::update_cursor;
 
 mod environment;
@@ -29,8 +30,8 @@ fn main() {
         .add_plugins(DefaultRaycastingPlugin)
         .add_plugins(DefaultPlugins.set(bevy_mod_raycast::low_latency_window_plugin()))
         .add_systems(Startup, (init_meshes, init_animations, setup).chain())
-        .add_systems(Update, setup_scene_once_loaded)
         .add_systems(Update, update_cursor)
+        .add_systems(Update, update_character_animations)
         .run();
 }
 
@@ -39,13 +40,4 @@ fn setup(mut commands: Commands, meshes: Res<Meshes>) {
     setup_lighting(&mut commands);
     commands.spawn(CharacterBundle::new(&meshes));
     render_environment(&mut commands, &meshes, &MAP);
-}
-
-fn setup_scene_once_loaded(
-    animations: Res<Animations>,
-    mut players: Query<&mut AnimationPlayer, Added<AnimationPlayer>>,
-) {
-    for mut player in &mut players {
-        player.play(animations.rogue_idle()).repeat();
-    }
 }
