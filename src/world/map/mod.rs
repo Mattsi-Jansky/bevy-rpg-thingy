@@ -4,7 +4,7 @@ pub mod generator;
 
 #[derive(Resource)]
 pub struct Map {
-    pub tiles: Vec<Vec<Tile>>
+    pub tiles: Vec<Vec<Tile>>,
 }
 
 pub struct Tile {

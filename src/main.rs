@@ -9,6 +9,7 @@ use crate::systems::character_animations::update_character_animations;
 use crate::systems::cursor::update_cursor;
 use crate::systems::resolve_player_command::resolve_player_commands;
 use crate::systems::wall_opacity::update_wall_opacity;
+use crate::world::map::generator::generate_map;
 use bevy::prelude::*;
 use bevy::DefaultPlugins;
 use bevy_mod_raycast::prelude::*;
@@ -16,7 +17,6 @@ use bevy_scene_hook::HookPlugin;
 use character::CharacterBundle;
 use systems::camera::setup_camera;
 use world::environment::render_environment;
-use crate::world::map::generator::generate_map;
 
 mod animation_scenes;
 mod assets;
