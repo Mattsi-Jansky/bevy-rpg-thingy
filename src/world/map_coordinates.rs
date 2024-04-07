@@ -4,7 +4,7 @@ use crate::world::world_coordinates::WorldPoint;
 #[derive(Clone, Debug)]
 pub struct MapPoint {
     pub x: usize,
-    pub z: usize
+    pub z: usize,
 }
 
 impl MapPoint {

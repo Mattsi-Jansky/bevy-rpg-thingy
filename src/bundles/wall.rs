@@ -1,37 +1,36 @@
-
-use bevy::math::Quat;
-use bevy::prelude::{Bundle, default, Res, SceneBundle, Transform};
 use crate::assets::meshes::Meshes;
 use crate::world::environment::{CameraBlockingWall, TILE_SIZE};
 use crate::world::world_coordinates::WorldPoint;
+use bevy::math::Quat;
+use bevy::prelude::{default, Bundle, Res, SceneBundle, Transform};
 
 #[derive(Bundle)]
 pub struct WallBundleNorth {
-    pub scene: SceneBundle
+    pub scene: SceneBundle,
 }
 
 #[derive(Bundle)]
 pub struct WallBundleEast {
     pub scene: SceneBundle,
-    blocking_wall: CameraBlockingWall
+    blocking_wall: CameraBlockingWall,
 }
 
 #[derive(Bundle)]
 pub struct WallBundleSouth {
     pub scene: SceneBundle,
-    blocking_wall: CameraBlockingWall
+    blocking_wall: CameraBlockingWall,
 }
 
 #[derive(Bundle)]
 pub struct WallBundleWest {
-    pub scene: SceneBundle
+    pub scene: SceneBundle,
 }
 
 impl WallBundleNorth {
     pub fn new(mut world_point: WorldPoint, meshes: &Res<Meshes>) -> Self {
         world_point.z += TILE_SIZE / 2.;
         Self {
-            scene: create_wall_scene(world_point, meshes, 3.1415)
+            scene: create_wall_scene(world_point, meshes, 3.1415),
         }
     }
 }
@@ -76,23 +75,23 @@ fn create_wall_scene(world_point: WorldPoint, meshes: &Res<Meshes>, rotation: f3
 
 #[derive(Bundle)]
 pub struct WallCornerBundleNorthEast {
-    pub scene: SceneBundle
+    pub scene: SceneBundle,
 }
 
 #[derive(Bundle)]
 pub struct WallCornerBundleSouthEast {
     pub scene: SceneBundle,
-    blocking_wall: CameraBlockingWall
+    blocking_wall: CameraBlockingWall,
 }
 
 #[derive(Bundle)]
 pub struct WallCornerBundleSouthWest {
-    pub scene: SceneBundle
+    pub scene: SceneBundle,
 }
 
 #[derive(Bundle)]
 pub struct WallCornerBundleNorthWest {
-    pub scene: SceneBundle
+    pub scene: SceneBundle,
 }
 
 impl WallCornerBundleSouthWest {
@@ -136,7 +135,11 @@ impl WallCornerBundleNorthWest {
     }
 }
 
-fn create_wall_corner_scene(world_point: WorldPoint, meshes: &Res<Meshes>, rotation: f32) -> SceneBundle {
+fn create_wall_corner_scene(
+    world_point: WorldPoint,
+    meshes: &Res<Meshes>,
+    rotation: f32,
+) -> SceneBundle {
     let transform: Transform = world_point.into();
     SceneBundle {
         scene: meshes.wall_corner(),

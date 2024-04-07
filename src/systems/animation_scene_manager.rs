@@ -1,7 +1,7 @@
 use crate::animation_scenes::{AnimationScene, AnimationSceneTimer, Direction};
 use crate::character::CharacterState;
-use crate::world::environment::TILE_SIZE;
 use crate::events::AnimationSceneStart;
+use crate::world::environment::TILE_SIZE;
 use crate::AppState;
 
 use bevy::prelude::{Commands, Entity, EventReader, Query, Res, ResMut, Time, Transform, With};
@@ -13,23 +13,28 @@ pub fn update_animation_scenes(
     time: Res<Time>,
     mut timer: ResMut<AnimationSceneTimer>,
     mut commands: Commands,
-    mut player_query: Query<(Entity, &mut Transform), With<CharacterState>>
+    mut player_query: Query<(Entity, &mut Transform), With<CharacterState>>,
 ) {
     if let AppState::Animating(animation_scene) = app_state.into_inner() {
         timer.timer.tick(time.delta());
         match animation_scene {
-            AnimationScene::PlayerMove {
-                target,
-                direction
-            } => {
+            AnimationScene::PlayerMove { target, direction } => {
                 let (player_entity, mut player_transform) = player_query.single_mut();
 
                 if !timer.timer.finished() {
                     match direction {
-                        Direction::North => {player_transform.translation.z += TILE_SIZE * time.delta_seconds()}
-                        Direction::East => {player_transform.translation.x -= TILE_SIZE * time.delta_seconds()}
-                        Direction::South => {player_transform.translation.z -= TILE_SIZE * time.delta_seconds()}
-                        Direction::West => {player_transform.translation.x += TILE_SIZE * time.delta_seconds()}
+                        Direction::North => {
+                            player_transform.translation.z += TILE_SIZE * time.delta_seconds()
+                        }
+                        Direction::East => {
+                            player_transform.translation.x -= TILE_SIZE * time.delta_seconds()
+                        }
+                        Direction::South => {
+                            player_transform.translation.z -= TILE_SIZE * time.delta_seconds()
+                        }
+                        Direction::West => {
+                            player_transform.translation.x += TILE_SIZE * time.delta_seconds()
+                        }
                     }
                 } else {
                     player_transform.translation.x = target.x;
@@ -58,7 +63,7 @@ pub fn init_animation_scenes(
                     .insert(CharacterState::Moving);
                 commands.insert_resource(AppState::Animating(AnimationScene::PlayerMove {
                     target: target.clone(),
-                    direction: direction.clone()
+                    direction: direction.clone(),
                 }));
                 commands.insert_resource(AnimationSceneTimer {
                     timer: Timer::new(Duration::from_secs(1), TimerMode::Once),

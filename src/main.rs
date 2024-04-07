@@ -1,31 +1,31 @@
 use crate::animation_scenes::{AnimationScene, AnimationSceneTimer};
 use crate::assets::animations::init_animations;
 use crate::assets::meshes::{init_meshes, Meshes};
-use systems::camera::setup_camera;
-use world::environment::render_environment;
 use crate::events::{AnimationSceneStart, NewPlayerCommand};
 use crate::lighting::setup_lighting;
 use crate::systems::animation_scene_manager::{init_animation_scenes, update_animation_scenes};
+use crate::systems::camera::update_camera;
 use crate::systems::character_animations::update_character_animations;
 use crate::systems::cursor::update_cursor;
 use crate::systems::resolve_player_command::resolve_player_commands;
+use crate::systems::wall_opacity::update_wall_opacity;
+use crate::world::map::MAP;
 use bevy::prelude::*;
 use bevy::DefaultPlugins;
 use bevy_mod_raycast::prelude::*;
 use bevy_scene_hook::HookPlugin;
 use character::CharacterBundle;
-use crate::systems::camera::update_camera;
-use crate::systems::wall_opacity::update_wall_opacity;
-use crate::world::map::MAP;
+use systems::camera::setup_camera;
+use world::environment::render_environment;
 
 mod animation_scenes;
 mod assets;
+mod bundles;
 mod character;
 mod events;
 mod lighting;
 mod systems;
 mod world;
-mod bundles;
 
 #[derive(Resource, Default)]
 pub enum AppState {

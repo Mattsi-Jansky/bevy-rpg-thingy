@@ -1,10 +1,13 @@
-use bevy::prelude::{Resource, Timer};
 use crate::world::map_coordinates::MapPoint;
 use crate::world::world_coordinates::WorldPoint;
+use bevy::prelude::{Resource, Timer};
 
 #[derive(Clone)]
 pub enum AnimationScene {
-    PlayerMove { target: WorldPoint, direction: Direction },
+    PlayerMove {
+        target: WorldPoint,
+        direction: Direction,
+    },
 }
 
 #[derive(Clone, Debug)]
@@ -12,7 +15,7 @@ pub enum Direction {
     North,
     East,
     South,
-    West
+    West,
 }
 
 impl Direction {

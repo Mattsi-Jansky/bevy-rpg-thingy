@@ -1,11 +1,14 @@
 use crate::assets::meshes::Meshes;
-use bevy::prelude::{Commands, Component, default, Res, SceneBundle, Transform};
-use rand::distributions::{Distribution, Uniform};
-use rand::prelude::ThreadRng;
 use crate::bundles::tile::{IsTile, TileBundle};
-use crate::bundles::wall::{WallBundleEast, WallBundleNorth, WallBundleSouth, WallBundleWest, WallCornerBundleNorthEast, WallCornerBundleNorthWest, WallCornerBundleSouthEast, WallCornerBundleSouthWest};
+use crate::bundles::wall::{
+    WallBundleEast, WallBundleNorth, WallBundleSouth, WallBundleWest, WallCornerBundleNorthEast,
+    WallCornerBundleNorthWest, WallCornerBundleSouthEast, WallCornerBundleSouthWest,
+};
 use crate::world::map::{Tile, TileType, WallType};
 use crate::world::map_coordinates::MapPoint;
+use bevy::prelude::{default, Commands, Component, Res, SceneBundle, Transform};
+use rand::distributions::{Distribution, Uniform};
+use rand::prelude::ThreadRng;
 
 pub const TILE_SIZE: f32 = 4.;
 
@@ -48,16 +51,14 @@ fn render_tile(
         TileType::None => None,
     };
     if let Some(tile_scene) = maybe_tile_scene {
-        commands.spawn(
-            TileBundle {
-                scene: SceneBundle {
-                    scene: tile_scene,
-                    transform: Transform::from_xyz(TILE_SIZE * (x as f32), 0., TILE_SIZE * (z as f32)),
-                    ..default()
-                },
-                tile: IsTile(),
-            }
-        );
+        commands.spawn(TileBundle {
+            scene: SceneBundle {
+                scene: tile_scene,
+                transform: Transform::from_xyz(TILE_SIZE * (x as f32), 0., TILE_SIZE * (z as f32)),
+                ..default()
+            },
+            tile: IsTile(),
+        });
     }
 }
 

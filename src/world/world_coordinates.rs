@@ -1,13 +1,13 @@
-use bevy::math::Vec3;
-use bevy::prelude::Transform;
 use crate::world::environment::TILE_SIZE;
 use crate::world::map_coordinates::MapPoint;
+use bevy::math::Vec3;
+use bevy::prelude::Transform;
 
 #[derive(Clone, Debug)]
 pub struct WorldPoint {
     pub x: f32,
     pub y: f32,
-    pub z: f32
+    pub z: f32,
 }
 
 impl WorldPoint {
@@ -28,17 +28,13 @@ impl From<Vec3> for WorldPoint {
         WorldPoint {
             x: point.x,
             y: point.y,
-            z: point.z
+            z: point.z,
         }
     }
 }
 
 impl From<WorldPoint> for Transform {
     fn from(val: WorldPoint) -> Self {
-        Transform::from_xyz(
-            val.x,
-            val.y,
-            val.z
-        )
+        Transform::from_xyz(val.x, val.y, val.z)
     }
 }
