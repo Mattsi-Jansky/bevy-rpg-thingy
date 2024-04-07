@@ -15,6 +15,7 @@ use bevy::DefaultPlugins;
 use bevy_mod_raycast::prelude::*;
 use bevy_scene_hook::HookPlugin;
 use character::CharacterBundle;
+use crate::systems::camera::update_camera;
 
 mod animation_scenes;
 mod assets;
@@ -50,6 +51,7 @@ fn main() {
         .add_systems(Update, resolve_player_commands)
         .add_systems(Update, update_animation_scenes)
         .add_systems(Update, init_animation_scenes)
+        .add_systems(Update, update_camera)
         .add_event::<NewPlayerCommand>()
         .add_event::<AnimationSceneStart>()
         .run();

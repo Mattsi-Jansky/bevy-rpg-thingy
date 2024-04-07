@@ -15,8 +15,7 @@ pub fn update_animation_scenes(
     time: Res<Time>,
     mut timer: ResMut<AnimationSceneTimer>,
     mut commands: Commands,
-    mut player_query: Query<(Entity, &mut Transform), With<CharacterState>>,
-    mut camera_query: Query<Entity, With<Camera>>,
+    mut player_query: Query<(Entity, &mut Transform), With<CharacterState>>
 ) {
     if let AppState::Animating(animation_scene) = app_state.into_inner() {
         timer.timer.tick(time.delta());
@@ -26,24 +25,15 @@ pub fn update_animation_scenes(
                 z: target_z,
             } => {
                 let (player_entity, mut player_transform) = player_query.single_mut();
-                let camera_entity = camera_query.single_mut();
 
                 if !timer.timer.finished() {
                     // player_transform.translation.x += (TILE_SIZE * time.delta_seconds());
                     player_transform.translation.z += TILE_SIZE * time.delta_seconds();
-                    commands.entity(camera_entity).insert(
-                        Transform::from_xyz(10.0 + target_x, 10.0, 15.5 + target_z)
-                            .looking_at(player_transform.translation, Vec3::Y),
-                    );
                 } else {
                     let (target_x, target_z) = (*target_x, *target_z);
                     player_transform.translation.x = target_x;
                     player_transform.translation.z = target_z;
 
-                    commands.entity(camera_entity).insert(
-                        Transform::from_xyz(10.0 + target_x, 10.0, 15.5 + target_z)
-                            .looking_at(Vec3::new(target_x, 1.0, target_z), Vec3::Y),
-                    );
                     commands.insert_resource(AppState::AwaitingInput);
                     commands.entity(player_entity).insert(CharacterState::Idle);
                 }
