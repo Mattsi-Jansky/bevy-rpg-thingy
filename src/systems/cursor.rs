@@ -4,6 +4,7 @@ use bevy::input::ButtonInput;
 use bevy::prelude::{debug, default, EventWriter, MouseButton, Res};
 use bevy_mod_raycast::immediate::Raycast;
 use bevy_mod_raycast::CursorRay;
+use crate::world::map_coordinates::MapPoint;
 
 pub fn update_cursor(
     cursor_ray: Res<CursorRay>,
@@ -20,7 +21,7 @@ pub fn update_cursor(
                 let x: i32 = (position.x / TILE_SIZE).round() as i32;
                 let z: i32 = (position.z / TILE_SIZE).round() as i32;
                 debug!("Clicked on {}/{}", x, z);
-                event_writer.send(NewPlayerCommand::Move { x, z });
+                event_writer.send(NewPlayerCommand::Move { to: MapPoint::new(x, z) });
             }
         }
     }

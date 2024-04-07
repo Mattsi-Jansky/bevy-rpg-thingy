@@ -1,9 +1,10 @@
 use crate::animation_scenes::AnimationScene;
 use bevy::prelude::Event;
+use crate::world::map_coordinates::MapPoint;
 
 #[derive(Event)]
 pub enum NewPlayerCommand {
-    Move { x: i32, z: i32 },
+    Move{to: MapPoint},
 }
 
 #[derive(Event)]

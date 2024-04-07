@@ -1,12 +1,10 @@
-use crate::animation_scenes::{AnimationScene, AnimationSceneTimer};
+use crate::animation_scenes::{AnimationScene, AnimationSceneTimer, Direction};
 use crate::character::CharacterState;
 use crate::environment::TILE_SIZE;
 use crate::events::AnimationSceneStart;
 use crate::AppState;
 use bevy::math::Vec3;
-use bevy::prelude::{
-    Camera, Commands, Entity, EventReader, Query, Res, ResMut, Time, Transform, With,
-};
+use bevy::prelude::{Commands, Entity, EventReader, info, Query, Res, ResMut, Time, Transform, With};
 use bevy::time::{Timer, TimerMode};
 use std::time::Duration;
 
@@ -21,18 +19,21 @@ pub fn update_animation_scenes(
         timer.timer.tick(time.delta());
         match animation_scene {
             AnimationScene::PlayerMove {
-                x: target_x,
-                z: target_z,
+                target,
+                direction
             } => {
                 let (player_entity, mut player_transform) = player_query.single_mut();
 
                 if !timer.timer.finished() {
-                    // player_transform.translation.x += (TILE_SIZE * time.delta_seconds());
-                    player_transform.translation.z += TILE_SIZE * time.delta_seconds();
+                    match direction {
+                        Direction::North => {player_transform.translation.z += TILE_SIZE * time.delta_seconds()}
+                        Direction::East => {player_transform.translation.x -= TILE_SIZE * time.delta_seconds()}
+                        Direction::South => {player_transform.translation.z -= TILE_SIZE * time.delta_seconds()}
+                        Direction::West => {player_transform.translation.x += TILE_SIZE * time.delta_seconds()}
+                    }
                 } else {
-                    let (target_x, target_z) = (*target_x, *target_z);
-                    player_transform.translation.x = target_x;
-                    player_transform.translation.z = target_z;
+                    player_transform.translation.x = target.x;
+                    player_transform.translation.z = target.z;
 
                     commands.insert_resource(AppState::AwaitingInput);
                     commands.entity(player_entity).insert(CharacterState::Idle);
@@ -51,13 +52,13 @@ pub fn init_animation_scenes(
         let animation_scene = &event.0;
         let player_entity = player_query.single_mut();
         match animation_scene {
-            AnimationScene::PlayerMove { x, z } => {
+            AnimationScene::PlayerMove { target, direction } => {
                 commands
                     .entity(player_entity)
                     .insert(CharacterState::Moving);
                 commands.insert_resource(AppState::Animating(AnimationScene::PlayerMove {
-                    x: *x,
-                    z: *z,
+                    target: target.clone(),
+                    direction: direction.clone()
                 }));
                 commands.insert_resource(AnimationSceneTimer {
                     timer: Timer::new(Duration::from_secs(1), TimerMode::Once),

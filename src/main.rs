@@ -1,7 +1,7 @@
 use crate::animation_scenes::{AnimationScene, AnimationSceneTimer};
 use crate::assets::animations::init_animations;
 use crate::assets::meshes::{init_meshes, Meshes};
-use crate::camera::setup_camera;
+use systems::camera::setup_camera;
 use crate::environment::render_environment;
 use crate::events::{AnimationSceneStart, NewPlayerCommand};
 use crate::lighting::setup_lighting;
@@ -19,13 +19,13 @@ use crate::systems::camera::update_camera;
 
 mod animation_scenes;
 mod assets;
-mod camera;
 mod character;
 mod environment;
 mod events;
 mod lighting;
 mod map;
 mod systems;
+mod world;
 
 #[derive(Resource, Default)]
 pub enum AppState {
