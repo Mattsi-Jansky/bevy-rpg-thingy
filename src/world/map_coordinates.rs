@@ -3,12 +3,12 @@ use crate::world::world_coordinates::WorldPoint;
 
 #[derive(Clone, Debug)]
 pub struct MapPoint {
-    pub x: i32,
-    pub z: i32
+    pub x: usize,
+    pub z: usize
 }
 
 impl MapPoint {
-    pub fn new(x: i32, z: i32) -> Self {
+    pub fn new(x: usize, z: usize) -> Self {
         Self { x, z }
     }
 

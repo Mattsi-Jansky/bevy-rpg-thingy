@@ -18,8 +18,8 @@ pub fn update_cursor(
             if let Some(hit) = result {
                 let (_, intersection) = hit;
                 let position = intersection.position();
-                let x: i32 = (position.x / TILE_SIZE).round() as i32;
-                let z: i32 = (position.z / TILE_SIZE).round() as i32;
+                let x = (position.x / TILE_SIZE).round() as usize;
+                let z = (position.z / TILE_SIZE).round() as usize;
                 debug!("Clicked on {}/{}", x, z);
                 event_writer.send(NewPlayerCommand::Move { to: MapPoint::new(x, z) });
             }

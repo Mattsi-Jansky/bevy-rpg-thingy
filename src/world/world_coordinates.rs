@@ -1,4 +1,5 @@
 use bevy::math::Vec3;
+use bevy::prelude::Transform;
 use crate::environment::TILE_SIZE;
 use crate::world::map_coordinates::MapPoint;
 
@@ -16,8 +17,8 @@ impl WorldPoint {
 
     pub fn to_map_point(self) -> MapPoint {
         MapPoint {
-            x: (self.x / TILE_SIZE).round() as i32,
-            z: (self.z / TILE_SIZE).round() as i32,
+            x: (self.x / TILE_SIZE).round() as usize,
+            z: (self.z / TILE_SIZE).round() as usize,
         }
     }
 }
@@ -29,5 +30,15 @@ impl From<Vec3> for WorldPoint {
             y: point.y,
             z: point.z
         }
+    }
+}
+
+impl Into<Transform> for WorldPoint {
+    fn into(self) -> Transform {
+        Transform::from_xyz(
+            self.x,
+            self.y,
+            self.z
+        )
     }
 }

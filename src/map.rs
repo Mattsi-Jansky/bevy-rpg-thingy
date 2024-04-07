@@ -118,10 +118,10 @@ lazy_static! {
 
 pub struct Tile {
     pub tile_type: TileType,
-    pub wall_north: WallType,
-    pub wall_east: WallType,
     pub wall_south: WallType,
     pub wall_west: WallType,
+    pub wall_north: WallType,
+    pub wall_east: WallType,
 }
 
 impl Tile {
@@ -134,10 +134,10 @@ impl Tile {
     ) -> Self {
         Self {
             tile_type,
-            wall_north,
-            wall_east,
-            wall_south,
-            wall_west,
+            wall_south: wall_north,
+            wall_west: wall_east,
+            wall_north: wall_south,
+            wall_east: wall_west,
         }
     }
 }

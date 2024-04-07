@@ -16,6 +16,7 @@ use bevy_mod_raycast::prelude::*;
 use bevy_scene_hook::HookPlugin;
 use character::CharacterBundle;
 use crate::systems::camera::update_camera;
+use crate::systems::wall_opacity::update_wall_opacity;
 
 mod animation_scenes;
 mod assets;
@@ -26,6 +27,7 @@ mod lighting;
 mod map;
 mod systems;
 mod world;
+mod bundles;
 
 #[derive(Resource, Default)]
 pub enum AppState {
@@ -52,6 +54,7 @@ fn main() {
         .add_systems(Update, update_animation_scenes)
         .add_systems(Update, init_animation_scenes)
         .add_systems(Update, update_camera)
+        .add_systems(Update, update_wall_opacity)
         .add_event::<NewPlayerCommand>()
         .add_event::<AnimationSceneStart>()
         .run();
