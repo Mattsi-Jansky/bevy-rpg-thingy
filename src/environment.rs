@@ -5,7 +5,7 @@ use bevy::prelude::{default, Commands, Res, SceneBundle, Transform, Material, St
 use rand::distributions::{Distribution, Uniform};
 use rand::prelude::ThreadRng;
 use crate::bundles::tile::{IsTile, TileBundle};
-use crate::bundles::wall::{WallBundleWest, WallBundleNorth, WallBundleSouth, WallBundleEast};
+use crate::bundles::wall::{WallBundleWest, WallBundleNorth, WallBundleSouth, WallBundleEast, WallCornerBundleSouthWest, WallCornerBundleSouthEast, WallCornerBundleNorthWest, WallCornerBundleNorthEast};
 use crate::world::map_coordinates::MapPoint;
 
 pub const TILE_SIZE: f32 = 4.;
@@ -20,8 +20,8 @@ pub fn render_environment(commands: &mut Commands, meshes: &Res<Meshes>, map: &V
             let map_point = MapPoint::new(x, z);
             let tile = map.get(x).unwrap().get(z).unwrap();
             render_tile(commands, meshes, &mut rng, distribution, x, z, tile);
-            render_walls(commands, meshes, map_point, tile);
-            render_wall_corners(commands, meshes, x, z, tile);
+            render_walls(commands, meshes, map_point.clone(), tile);
+            render_wall_corners(commands, meshes, map_point, tile);
         }
     }
 }
@@ -84,55 +84,20 @@ fn render_walls(commands: &mut Commands, meshes: &Res<Meshes>, point: MapPoint, 
 fn render_wall_corners(
     commands: &mut Commands,
     meshes: &Res<Meshes>,
-    x: usize,
-    z: usize,
+    point: MapPoint,
     tile: &Tile,
 ) {
+    let world_point = point.to_world_point();
     if matches!(tile.wall_west, WallType::Regular) && matches!(tile.wall_south, WallType::Regular) {
-        commands.spawn(SceneBundle {
-            scene: meshes.wall_corner().clone_weak(),
-            transform: Transform::from_xyz(
-                TILE_SIZE * (x as f32) + (TILE_SIZE / 2.),
-                0.,
-                TILE_SIZE * (z as f32) - (TILE_SIZE / 2.),
-            ),
-            ..default()
-        });
+        commands.spawn(WallCornerBundleSouthWest::new(world_point.clone(), meshes));
     }
     if matches!(tile.wall_south, WallType::Regular) && matches!(tile.wall_east, WallType::Regular) {
-        commands.spawn(SceneBundle {
-            scene: meshes.wall_corner().clone_weak(),
-            transform: Transform::from_xyz(
-                TILE_SIZE * (x as f32) - (TILE_SIZE / 2.),
-                0.,
-                TILE_SIZE * (z as f32) - (TILE_SIZE / 2.),
-            )
-            .with_rotation(Quat::from_rotation_y(1.5708)),
-            ..default()
-        });
+        commands.spawn(WallCornerBundleSouthEast::new(world_point.clone(), meshes));
     }
     if matches!(tile.wall_west, WallType::Regular) && matches!(tile.wall_north, WallType::Regular) {
-        commands.spawn(SceneBundle {
-            scene: meshes.wall_corner().clone_weak(),
-            transform: Transform::from_xyz(
-                TILE_SIZE * (x as f32) + (TILE_SIZE / 2.),
-                0.,
-                TILE_SIZE * (z as f32) + (TILE_SIZE / 2.),
-            )
-            .with_rotation(Quat::from_rotation_y(-1.5708)),
-            ..default()
-        });
+        commands.spawn(WallCornerBundleNorthWest::new(world_point.clone(), meshes));
     }
     if matches!(tile.wall_north, WallType::Regular) && matches!(tile.wall_east, WallType::Regular) {
-        commands.spawn(SceneBundle {
-            scene: meshes.wall_corner().clone_weak(),
-            transform: Transform::from_xyz(
-                TILE_SIZE * (x as f32) - (TILE_SIZE / 2.),
-                0.,
-                TILE_SIZE * (z as f32) + (TILE_SIZE / 2.),
-            )
-            .with_rotation(Quat::from_rotation_y(3.14159)),
-            ..default()
-        });
+        commands.spawn(WallCornerBundleNorthEast::new(world_point.clone(), meshes));
     }
 }
