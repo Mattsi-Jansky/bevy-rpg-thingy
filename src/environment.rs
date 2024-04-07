@@ -4,6 +4,7 @@ use bevy::math::Quat;
 use bevy::prelude::{default, Commands, Res, SceneBundle, Transform, Material, StandardMaterial, Handle, info, Component};
 use rand::distributions::{Distribution, Uniform};
 use rand::prelude::ThreadRng;
+use crate::bundles::tile::{IsTile, TileBundle};
 use crate::bundles::wall::{WallBundleWest, WallBundleNorth, WallBundleSouth, WallBundleEast};
 use crate::world::map_coordinates::MapPoint;
 
@@ -48,11 +49,16 @@ fn render_tile(
         TileType::None => None,
     };
     if let Some(tile_scene) = maybe_tile_scene {
-        commands.spawn(SceneBundle {
-            scene: tile_scene,
-            transform: Transform::from_xyz(TILE_SIZE * (x as f32), 0., TILE_SIZE * (z as f32)),
-            ..default()
-        });
+        commands.spawn(
+            TileBundle {
+                scene: SceneBundle {
+                    scene: tile_scene,
+                    transform: Transform::from_xyz(TILE_SIZE * (x as f32), 0., TILE_SIZE * (z as f32)),
+                    ..default()
+                },
+                tile: IsTile(),
+            }
+        );
     }
 }
 
