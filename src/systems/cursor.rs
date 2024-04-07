@@ -1,4 +1,4 @@
-use crate::environment::TILE_SIZE;
+use crate::world::environment::TILE_SIZE;
 use crate::events::NewPlayerCommand;
 use bevy::input::ButtonInput;
 use bevy::prelude::{debug, default, EventWriter, HierarchyQueryExt, MouseButton, Parent, Query, Res};

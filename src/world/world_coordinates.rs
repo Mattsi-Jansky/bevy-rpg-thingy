@@ -1,6 +1,6 @@
 use bevy::math::Vec3;
 use bevy::prelude::Transform;
-use crate::environment::TILE_SIZE;
+use crate::world::environment::TILE_SIZE;
 use crate::world::map_coordinates::MapPoint;
 
 #[derive(Clone, Debug)]

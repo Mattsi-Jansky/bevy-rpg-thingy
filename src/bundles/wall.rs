@@ -2,7 +2,7 @@ use bevy::asset::Handle;
 use bevy::math::Quat;
 use bevy::prelude::{Bundle, default, Res, SceneBundle, Transform};
 use crate::assets::meshes::Meshes;
-use crate::environment::{CameraBlockingWall, TILE_SIZE};
+use crate::world::environment::{CameraBlockingWall, TILE_SIZE};
 use crate::world::world_coordinates::WorldPoint;
 
 #[derive(Bundle)]

@@ -1,6 +1,6 @@
 use crate::animation_scenes::{AnimationScene, AnimationSceneTimer, Direction};
 use crate::character::CharacterState;
-use crate::environment::TILE_SIZE;
+use crate::world::environment::TILE_SIZE;
 use crate::events::AnimationSceneStart;
 use crate::AppState;
 use bevy::math::Vec3;

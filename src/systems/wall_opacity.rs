@@ -1,7 +1,7 @@
 use bevy::pbr::AlphaMode;
 use bevy::prelude::{Assets, Children, Color, Commands, Entity, Handle, HierarchyQueryExt, info, Query, ResMut, StandardMaterial, With};
 use bevy::utils::default;
-use crate::environment::CameraBlockingWall;
+use crate::world::environment::CameraBlockingWall;
 
 pub fn update_wall_opacity(
     mut commands: Commands,

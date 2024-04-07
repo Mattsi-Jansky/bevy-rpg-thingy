@@ -1,5 +1,5 @@
 use crate::animation_scenes::{AnimationScene, Direction};
-use crate::environment::TILE_SIZE;
+use crate::world::environment::TILE_SIZE;
 use crate::events::{AnimationSceneStart, NewPlayerCommand};
 use bevy::prelude::{Commands, EventReader, EventWriter, Query, Transform, With};
 use crate::AppState;

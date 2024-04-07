@@ -1,4 +1,4 @@
-use crate::environment::TILE_SIZE;
+use crate::world::environment::TILE_SIZE;
 use crate::world::world_coordinates::WorldPoint;
 
 #[derive(Clone, Debug)]
