@@ -5,6 +5,7 @@ use bevy::prelude::{debug, default, EventWriter, HierarchyQueryExt, MouseButton,
 use bevy_mod_raycast::immediate::Raycast;
 use bevy_mod_raycast::CursorRay;
 use bevy_mod_raycast::prelude::RaycastSettings;
+use crate::AppState;
 use crate::bundles::tile::IsTile;
 use crate::world::map_coordinates::MapPoint;
 
@@ -14,9 +15,10 @@ pub fn update_cursor(
     buttons: Res<ButtonInput<MouseButton>>,
     mut event_writer: EventWriter<NewPlayerCommand>,
     tile_query: Query<&IsTile>,
-    parent_query: Query<&Parent>
+    parent_query: Query<&Parent>,
+    state: Res<AppState>
 ) {
-    if buttons.just_pressed(MouseButton::Left) {
+    if matches!(AppState::AwaitingInput, state) && buttons.just_pressed(MouseButton::Left) {
         if let Some(cursor_ray) = **cursor_ray {
             let filter = |entity| {
                 for parent in parent_query.iter_ancestors(entity) {

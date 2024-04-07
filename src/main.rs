@@ -33,6 +33,7 @@ mod bundles;
 pub enum AppState {
     #[default]
     AwaitingInput,
+    StartingAnimation,
     Animating(AnimationScene),
 }
 
