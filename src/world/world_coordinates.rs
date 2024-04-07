@@ -33,12 +33,12 @@ impl From<Vec3> for WorldPoint {
     }
 }
 
-impl Into<Transform> for WorldPoint {
-    fn into(self) -> Transform {
+impl From<WorldPoint> for Transform {
+    fn from(val: WorldPoint) -> Self {
         Transform::from_xyz(
-            self.x,
-            self.y,
-            self.z
+            val.x,
+            val.y,
+            val.z
         )
     }
 }

@@ -3,8 +3,8 @@ use crate::character::CharacterState;
 use crate::world::environment::TILE_SIZE;
 use crate::events::AnimationSceneStart;
 use crate::AppState;
-use bevy::math::Vec3;
-use bevy::prelude::{Commands, Entity, EventReader, info, Query, Res, ResMut, Time, Transform, With};
+
+use bevy::prelude::{Commands, Entity, EventReader, Query, Res, ResMut, Time, Transform, With};
 use bevy::time::{Timer, TimerMode};
 use std::time::Duration;
 

@@ -1,4 +1,4 @@
-use bevy::asset::Handle;
+
 use bevy::math::Quat;
 use bevy::prelude::{Bundle, default, Res, SceneBundle, Transform};
 use crate::assets::meshes::Meshes;
@@ -29,7 +29,7 @@ pub struct WallBundleWest {
 
 impl WallBundleNorth {
     pub fn new(mut world_point: WorldPoint, meshes: &Res<Meshes>) -> Self {
-        world_point.z += (TILE_SIZE / 2.);
+        world_point.z += TILE_SIZE / 2.;
         Self {
             scene: create_wall_scene(world_point, meshes, 3.1415)
         }
@@ -38,7 +38,7 @@ impl WallBundleNorth {
 
 impl WallBundleWest {
     pub fn new(mut world_point: WorldPoint, meshes: &Res<Meshes>) -> Self {
-        world_point.x += (TILE_SIZE / 2.);
+        world_point.x += TILE_SIZE / 2.;
         Self {
             scene: create_wall_scene(world_point, meshes, -1.5708),
         }
@@ -47,7 +47,7 @@ impl WallBundleWest {
 
 impl WallBundleSouth {
     pub fn new(mut world_point: WorldPoint, meshes: &Res<Meshes>) -> Self {
-        world_point.z -= (TILE_SIZE / 2.);
+        world_point.z -= TILE_SIZE / 2.;
         Self {
             scene: create_wall_scene(world_point, meshes, 0.),
             blocking_wall: CameraBlockingWall(),
@@ -57,7 +57,7 @@ impl WallBundleSouth {
 
 impl WallBundleEast {
     pub fn new(mut world_point: WorldPoint, meshes: &Res<Meshes>) -> Self {
-        world_point.x -= (TILE_SIZE / 2.);
+        world_point.x -= TILE_SIZE / 2.;
         Self {
             scene: create_wall_scene(world_point, meshes, 1.5708),
             blocking_wall: CameraBlockingWall(),
@@ -97,8 +97,8 @@ pub struct WallCornerBundleNorthWest {
 
 impl WallCornerBundleSouthWest {
     pub fn new(mut world_point: WorldPoint, meshes: &Res<Meshes>) -> Self {
-        world_point.x += (TILE_SIZE / 2.);
-        world_point.z -= (TILE_SIZE / 2.);
+        world_point.x += TILE_SIZE / 2.;
+        world_point.z -= TILE_SIZE / 2.;
         Self {
             scene: create_wall_corner_scene(world_point, meshes, 0.),
         }
@@ -107,8 +107,8 @@ impl WallCornerBundleSouthWest {
 
 impl WallCornerBundleSouthEast {
     pub fn new(mut world_point: WorldPoint, meshes: &Res<Meshes>) -> Self {
-        world_point.x -= (TILE_SIZE / 2.);
-        world_point.z -= (TILE_SIZE / 2.);
+        world_point.x -= TILE_SIZE / 2.;
+        world_point.z -= TILE_SIZE / 2.;
         Self {
             scene: create_wall_corner_scene(world_point, meshes, 1.5708),
             blocking_wall: CameraBlockingWall(),
@@ -118,8 +118,8 @@ impl WallCornerBundleSouthEast {
 
 impl WallCornerBundleNorthEast {
     pub fn new(mut world_point: WorldPoint, meshes: &Res<Meshes>) -> Self {
-        world_point.x -= (TILE_SIZE / 2.);
-        world_point.z += (TILE_SIZE / 2.);
+        world_point.x -= TILE_SIZE / 2.;
+        world_point.z += TILE_SIZE / 2.;
         Self {
             scene: create_wall_corner_scene(world_point, meshes, 3.14159),
         }
@@ -128,8 +128,8 @@ impl WallCornerBundleNorthEast {
 
 impl WallCornerBundleNorthWest {
     pub fn new(mut world_point: WorldPoint, meshes: &Res<Meshes>) -> Self {
-        world_point.x += (TILE_SIZE / 2.);
-        world_point.z += (TILE_SIZE / 2.);
+        world_point.x += TILE_SIZE / 2.;
+        world_point.z += TILE_SIZE / 2.;
         Self {
             scene: create_wall_corner_scene(world_point, meshes, -1.5708),
         }
