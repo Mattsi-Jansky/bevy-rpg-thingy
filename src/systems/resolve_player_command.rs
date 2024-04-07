@@ -15,10 +15,13 @@ pub fn resolve_player_commands(
         match event {
             NewPlayerCommand::Move { to: to_map } => {
                 let from_map = WorldPoint::from(player_position).to_map_point();
-                event_writer.send(AnimationSceneStart(AnimationScene::PlayerMove {
-                    target: to_map.clone().to_world_point(),
-                    direction: Direction::from(&from_map, to_map)
-                }));
+                let diff = from_map.diff(to_map);
+                if diff == 1 {
+                    event_writer.send(AnimationSceneStart(AnimationScene::PlayerMove {
+                        target: to_map.clone().to_world_point(),
+                        direction: Direction::from(&from_map, to_map)
+                    }));
+                }
             }
         }
     }

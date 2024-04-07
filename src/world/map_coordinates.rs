@@ -19,4 +19,8 @@ impl MapPoint {
             z: (self.z as f32) * TILE_SIZE,
         }
     }
+
+    pub fn diff(&self, other: &MapPoint) -> usize {
+        self.x.abs_diff(other.x) + self.z.abs_diff(other.z)
+    }
 }
