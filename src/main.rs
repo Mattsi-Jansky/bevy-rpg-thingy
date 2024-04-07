@@ -9,7 +9,6 @@ use crate::systems::character_animations::update_character_animations;
 use crate::systems::cursor::update_cursor;
 use crate::systems::resolve_player_command::resolve_player_commands;
 use crate::systems::wall_opacity::update_wall_opacity;
-use crate::world::map::MAP;
 use bevy::prelude::*;
 use bevy::DefaultPlugins;
 use bevy_mod_raycast::prelude::*;
@@ -17,6 +16,7 @@ use bevy_scene_hook::HookPlugin;
 use character::CharacterBundle;
 use systems::camera::setup_camera;
 use world::environment::render_environment;
+use crate::world::map::generator::generate_map;
 
 mod animation_scenes;
 mod assets;
@@ -63,5 +63,7 @@ fn setup(mut commands: Commands, meshes: Res<Meshes>) {
     setup_camera(&mut commands);
     setup_lighting(&mut commands);
     commands.spawn(CharacterBundle::new(&meshes));
-    render_environment(&mut commands, &meshes, &MAP);
+    let map = generate_map();
+    render_environment(&mut commands, &meshes, &map.tiles);
+    commands.insert_resource(map);
 }

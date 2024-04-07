@@ -1,4 +1,11 @@
-use lazy_static::lazy_static;
+use bevy::prelude::Resource;
+
+pub mod generator;
+
+#[derive(Resource)]
+pub struct Map {
+    pub tiles: Vec<Vec<Tile>>
+}
 
 pub struct Tile {
     pub tile_type: TileType,
@@ -36,120 +43,4 @@ pub enum TileType {
 pub enum WallType {
     None,
     Regular,
-}
-
-lazy_static! {
-    pub static ref MAP: Vec<Vec<Tile>> = vec![
-        vec![
-            Tile::new(
-                TileType::Dirt,
-                WallType::Regular,
-                WallType::None,
-                WallType::None,
-                WallType::Regular
-            ),
-            Tile::new(
-                TileType::Dirt,
-                WallType::None,
-                WallType::None,
-                WallType::None,
-                WallType::Regular
-            ),
-            Tile::new(
-                TileType::Dirt,
-                WallType::None,
-                WallType::None,
-                WallType::None,
-                WallType::Regular
-            ),
-            Tile::new(
-                TileType::Dirt,
-                WallType::None,
-                WallType::None,
-                WallType::None,
-                WallType::Regular
-            ),
-            Tile::new(
-                TileType::Dirt,
-                WallType::None,
-                WallType::None,
-                WallType::Regular,
-                WallType::Regular
-            )
-        ],
-        vec![
-            Tile::new(
-                TileType::Wood,
-                WallType::Regular,
-                WallType::None,
-                WallType::None,
-                WallType::None
-            ),
-            Tile::new(
-                TileType::Wood,
-                WallType::None,
-                WallType::None,
-                WallType::None,
-                WallType::None
-            ),
-            Tile::new(
-                TileType::Wood,
-                WallType::None,
-                WallType::None,
-                WallType::None,
-                WallType::None
-            ),
-            Tile::new(
-                TileType::Wood,
-                WallType::None,
-                WallType::None,
-                WallType::None,
-                WallType::None
-            ),
-            Tile::new(
-                TileType::Wood,
-                WallType::None,
-                WallType::None,
-                WallType::Regular,
-                WallType::None
-            ),
-        ],
-        vec![
-            Tile::new(
-                TileType::Tiled,
-                WallType::Regular,
-                WallType::Regular,
-                WallType::None,
-                WallType::None
-            ),
-            Tile::new(
-                TileType::Tiled,
-                WallType::None,
-                WallType::Regular,
-                WallType::None,
-                WallType::None
-            ),
-            Tile::new(
-                TileType::None,
-                WallType::None,
-                WallType::Regular,
-                WallType::None,
-                WallType::None
-            ),
-            Tile::new(
-                TileType::Tiled,
-                WallType::None,
-                WallType::Regular,
-                WallType::None,
-                WallType::None
-            ),
-            Tile::new(
-                TileType::Tiled,
-                WallType::None,
-                WallType::Regular,
-                WallType::Regular,
-                WallType::None
-            )
-        ]
-    ];
 }
