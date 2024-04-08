@@ -4,10 +4,8 @@ use rand::distributions::{Distribution, Uniform};
 
 const DUNGEON_SIZE_X: usize = 50;
 const DUNGEON_SIZE_Z: usize = 50;
-const MIN_ROOMS: usize = 4;
-const MAX_ROOMS: usize = 10;
-const MIN_ROOM_SIZE: usize = 15;
-const MAX_ROOM_SIZE: usize = 150;
+const MIN_ROOMS: usize = 6;
+const MAX_ROOMS: usize = 14;
 
 pub fn generate_map() -> Map {
     let room_shapes: Vec<RoomShape> = vec![
