@@ -108,14 +108,14 @@ impl Room {
                 let tile = tiles.get_mut(x).unwrap().get_mut(z).unwrap();
                 tile.tile_type = TileType::Dirt;
                 if x == self.north_west_point.x {
-                    tile.wall_west = WallType::Regular;
-                } else if x == self.north_west_point.x + self.width {
                     tile.wall_east = WallType::Regular;
+                } else if x == self.north_west_point.x + self.width - 1 {
+                    tile.wall_west = WallType::Regular ;
                 }
                 if z == self.north_west_point.z {
-                    tile.wall_north = WallType::Regular;
-                } else if z == self.north_west_point.z + self.height {
                     tile.wall_south = WallType::Regular;
+                } else if z == self.north_west_point.z + self.height - 1 {
+                    tile.wall_north = WallType::Regular;
                 }
             }
         }
