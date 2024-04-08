@@ -1,14 +1,17 @@
 use crate::assets::meshes::Meshes;
 use bevy::core::Name;
-use bevy::prelude::{default, Bundle, Component, Res, SceneBundle, Visibility};
+use bevy::prelude::{default, Bundle, Component, Res, SceneBundle, Visibility, Transform};
 use bevy_scene_hook::{HookedSceneBundle, SceneHook};
+use crate::world::map_coordinates::MapPoint;
 
 impl CharacterBundle {
-    pub fn new(meshes: &Res<Meshes>) -> Self {
+    pub fn new(meshes: &Res<Meshes>, spawn_point: MapPoint) -> Self {
+        let spawn_point_world = spawn_point.to_world_point();
         Self {
             scene: HookedSceneBundle {
                 scene: SceneBundle {
-                    scene: meshes.character_rogue(),
+                   scene: meshes.character_rogue(),
+                    transform: Transform::from_xyz(spawn_point_world.x, 0., spawn_point_world.z),
                     ..default()
                 },
                 hook: SceneHook::new(|entity, commands| {

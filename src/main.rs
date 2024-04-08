@@ -62,8 +62,8 @@ fn main() {
 fn setup(mut commands: Commands, meshes: Res<Meshes>) {
     setup_camera(&mut commands);
     setup_lighting(&mut commands);
-    commands.spawn(CharacterBundle::new(&meshes));
     let map = generate_map();
     render_environment(&mut commands, &meshes, &map.tiles);
+    commands.spawn(CharacterBundle::new(&meshes, map.spawn_point.clone()));
     commands.insert_resource(map);
 }
