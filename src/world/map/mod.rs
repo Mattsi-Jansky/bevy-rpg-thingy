@@ -1,5 +1,5 @@
 use crate::world::map_coordinates::MapPoint;
-use bevy::prelude::{info, Resource};
+use bevy::prelude::{Resource};
 
 pub mod generator;
 

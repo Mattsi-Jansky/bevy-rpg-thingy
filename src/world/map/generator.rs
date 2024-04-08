@@ -33,9 +33,9 @@ pub fn generate_map() -> Map {
     ];
     let mut tiles: Vec<Vec<Tile>> = vec![];
 
-    for x in 0..DUNGEON_SIZE_X {
+    for _x in 0..DUNGEON_SIZE_X {
         let mut row = vec![];
-        for z in 0..DUNGEON_SIZE_Z {
+        for _z in 0..DUNGEON_SIZE_Z {
             row.push(Tile::empty())
         }
         tiles.push(row);
@@ -74,7 +74,7 @@ pub fn generate_map() -> Map {
 
     Map {
         tiles,
-        spawn_point: possible_spawn_points.get(0).unwrap().clone(),
+        spawn_point: possible_spawn_points.first().unwrap().clone(),
     }
 }
 
@@ -107,7 +107,7 @@ impl Room {
     pub fn apply(&self, tiles: &mut Vec<Vec<Tile>>) {
         for x in self.north_west_point.x..self.north_west_point.x + self.width {
             for z in self.north_west_point.z..self.north_west_point.z + self.height {
-                let mut tile = tiles.get_mut(x).unwrap().get_mut(z).unwrap();
+                let tile = tiles.get_mut(x).unwrap().get_mut(z).unwrap();
                 tile.tile_type = TileType::Dirt;
                 if x == self.north_west_point.x {
                     tile.wall_west = WallType::Regular;
@@ -127,7 +127,7 @@ impl Room {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::info;
+    
 
     #[test]
     fn print_dungeon() {
