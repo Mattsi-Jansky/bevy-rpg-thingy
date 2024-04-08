@@ -1,16 +1,16 @@
-use bevy::prelude::{info, Resource};
 use crate::world::map_coordinates::MapPoint;
+use bevy::prelude::{info, Resource};
 
 pub mod generator;
 
 #[derive(Resource)]
 pub struct Map {
     pub tiles: Vec<Vec<Tile>>,
-    pub spawn_point: MapPoint
+    pub spawn_point: MapPoint,
 }
 
 impl Map {
-    pub(crate) fn debug(&self) -> String{
+    pub(crate) fn debug(&self) -> String {
         let mut visualisation = String::new();
 
         for x in 0..self.tiles.len() {
@@ -18,7 +18,7 @@ impl Map {
             for z in 0..row.len() {
                 let char = match row.get(z).unwrap().tile_type {
                     TileType::None => ' ',
-                    _ => '#'
+                    _ => '#',
                 };
                 visualisation.push(char);
             }
@@ -55,7 +55,13 @@ impl Tile {
     }
 
     pub fn empty() -> Self {
-        Self::new(TileType::None, WallType::None,WallType::None,WallType::None,WallType::None)
+        Self::new(
+            TileType::None,
+            WallType::None,
+            WallType::None,
+            WallType::None,
+            WallType::None,
+        )
     }
 }
 

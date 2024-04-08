@@ -1,8 +1,8 @@
 use crate::assets::meshes::Meshes;
-use bevy::core::Name;
-use bevy::prelude::{default, Bundle, Component, Res, SceneBundle, Visibility, Transform};
-use bevy_scene_hook::{HookedSceneBundle, SceneHook};
 use crate::world::map_coordinates::MapPoint;
+use bevy::core::Name;
+use bevy::prelude::{default, Bundle, Component, Res, SceneBundle, Transform, Visibility};
+use bevy_scene_hook::{HookedSceneBundle, SceneHook};
 
 impl CharacterBundle {
     pub fn new(meshes: &Res<Meshes>, spawn_point: MapPoint) -> Self {
@@ -10,7 +10,7 @@ impl CharacterBundle {
         Self {
             scene: HookedSceneBundle {
                 scene: SceneBundle {
-                   scene: meshes.character_rogue(),
+                    scene: meshes.character_rogue(),
                     transform: Transform::from_xyz(spawn_point_world.x, 0., spawn_point_world.z),
                     ..default()
                 },
